@@ -32,6 +32,7 @@ module collision_check(X0, Y0, X1, Y1, xstep, ystep, collision, clk);
 	input [7:0] X0, X1; 
 	input [6:0] Y0, Y1;
 	input [6:0] xstep, ystep;
+	input clk;
 	output [1:0] collision; // MSB 0 if no collision, 1 if collision
 							// LSB 0 if X collision, 1 if Y collision
 	always @(posedge clk)
@@ -50,7 +51,7 @@ endmodule
 
 module change_direction_collision(collision_code, original_dir, new_dir)
 	input [1:0] collision_code; // Where collision_code[0] should be 1 and collision_code[1]
-								// should be the type of the collision
+				// should be the type of the collision
 	input [1:0] original_dir;
 	output [1:0] new_dir;
 
