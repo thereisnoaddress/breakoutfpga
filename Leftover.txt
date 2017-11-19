@@ -1,0 +1,63 @@
+Leftover 
+
+** Global variables **
+block_count = 8 * 4 = 32;
+block_width = 80;
+block_height = 40;
+ball_dimention = 30;
+score = 0;
+X, Y = 320, 30; // initial ball location
+xstep, ystep = 1, 1; 
+dir = 2'b00; // initial direction is up and right
+
+
+/*
+===== ===== ===== ===== ===== ===== ===== ===== 
+===== ===== ===== ===== ===== ===== ===== ===== 
+===== ===== ===== ===== ===== ===== ===== ===== 
+===== ===== ===== ===== ===== ===== ===== ===== 
+
+					 O
+___________________------______________________
+
+*/
+
+
+
+
+
+** Drawing **
+Step 1. Draw all the boxes on top (80 by 40, 4 rows)
+	- Set constant variables so that the boxes stay in place
+Step 2. Draw the paddle on the bottom (80 by 20) at 280-360
+	- Should be controlled by paddle.v always@(*)
+Step 3. Draw the ball (30 by 30)
+	- Asynchronous reset, starts when pressed key[2]
+	- Bounces around like part 3
+
+Draw function must take in current X Y location, xstep and ystep, and direction
+	draw(X, Y, xstep, ystep, dir)
+
+
+** The ball **
+- The ball should be drawn at every clock cycle
+- Should have a direction (00, 01, 10, 11) 
+- At every clock cycle, 
+    cur = 3'b000 // To paint cur black
+	if check_collision is false, then  
+		draw(x + xstep, y + ystep, dir)
+	  otherwise, 
+	    block_at_x+xstep_and_y+ystep = 3'b000 // repaint the block black 
+	    score += 1
+	    block_count -= 1
+	    new_dir = change_direction_collision
+	  	draw(x + xstep, y + ystep, new_dir)
+
+
+^ This can be done using part 2 code
+
+** Collision logic for the ball **
+- At every clock cycle, check if the next step is going to hit something
+	- Use collision_check with X + xstep and Y + ystep which returns the type of collision
+		- If there is a collision, use chnage_direction_collision to get the new direction
+
