@@ -9,8 +9,9 @@ module paddle_shift(clk, KEY, X);
 	always @(posedge clk, negedge KEY[2])
 	// Move to the left
 		if (KEY[1]) begin
-			if (X - 6'b101000- 1'b1 < 1'b0) 
-				X <= X;
+			if (X - 6'b101000- 1'b1 <= 1'b0) 
+			  X <= 1'b1 + 6'b101000;
+		   
 			else
 				X <= X - 1;
 			end
@@ -18,7 +19,7 @@ module paddle_shift(clk, KEY, X);
 
 	// Move to the right
 		else if (KEY[0]) begin
-			if (X + 6'b101000 + 1'b1 > 9'b111100000) 
+			if (X + 6'b101000 + 1'b1 >= 9'b111100000) 
 				X <= X;
 			else
 				X <= X + 1;
