@@ -1,63 +1,3 @@
- 
-module update_ball(X, Y, clk, dir, X0, Y0);
-
-	input clk;
-	input [9:0] X; 
-	input [9:0] Y;
-	input [1:0] dir; 
-	// dir 00 up right
-	//     01 up left
-	//     10 down right
-	//     11 down left
-   output reg [9:0] 	    X0;
-   output reg [9:0] 	    Y0;
- 
-   
-       
-        wire [1:0] dir0;
-   always @(*) begin
-      X0 = X;
-      Y0 = Y;
-   end
-   assign dir0 = dir;
-
-	always @(posedge clk)begin
-		case(dir0)
-			2'b00: begin
-			   X0 <= X0 + 1;
-			   Y0 <= Y0 + 1;
-			end
-		  
-			2'b01: begin
-			   X0 <= X0 - 1; 
-			   Y0 <= Y0 + 1;
-			end
-		  
-			2'b10: begin
-			   X0 <= X0 + 1; 
-			   Y0 <= Y0 - 1;
-			end
-		  
-			2'b11: begin
-			   X0 <= X0 - 1; 
-			   Y0 <= Y0 - 1;
-			end
-		  
-		default: begin
-		   X0 <= X0; 
-		   Y0 <= Y0;
-		end
-		  
-	endcase // dir
-	end // always @ (posedge clk)
-   
-
-   
-
-endmodule
-
-
-
 
 // Check if X0 + xstep >= X1 or Y0 + ystep >= Y1
 module collision_check(X0, Y0, X1, Y1, xstep, ystep, collision, clk);
@@ -79,7 +19,32 @@ module collision_check(X0, Y0, X1, Y1, xstep, ystep, collision, clk);
 			collision = 2'b00;
        end
 
-endmodule
+endmodule // collision_check
+
+
+module edge_check(X, Y, xstep, ystep, collision, clk);
+   input [9:0] X, Y;
+   input [6:0] xstep, ystep;
+   input       clk;
+   output reg [1:0] collision;
+
+
+   always @(posedge clk) begin
+      if (X + xstep >=  9'b111100000)
+	collision <= 2'b10;
+      else if (Y + ystep >= 10'b1010000000)
+	collision <= 2'b11;
+      else if (Y - ystep <= 1'b0)
+	collision <= 2'b11;
+      else
+	collision <= 2'b00;
+   end
+
+
+
+   
+endmodule // edge_check
+
 
 
 module change_direction_collision(collision_code, original_dir, new_dir);

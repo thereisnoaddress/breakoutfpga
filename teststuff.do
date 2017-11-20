@@ -1,7 +1,7 @@
 vlib work
 
-vlog -timescale 1ns/1ns collision_check.v
-vsim change_direction_collision
+vlog -timescale 1ns/1ns ball.v
+vsim update_ball
 
 log {/*}
 add wave {/*}
@@ -29,11 +29,11 @@ add wave {/*}
     
 
 #testing update_ball - OK
-#force { X[9:0]} 10'b0000100010
-#force { Y[9:0]} 10'b0001000100
-#force clk 0 0, 1 5 -r 10
-#force {dir[1:0]} 2'b 00
-#run 40ns
+force { X[9:0]} 10'b0000100010
+force { Y[9:0]} 10'b0001000100
+force clk 0 0, 1 5 -r 10
+force {dir[1:0]} 2'b 00
+run 40ns
 
    
 
