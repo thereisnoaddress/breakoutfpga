@@ -61,6 +61,8 @@ module move_ball(X, Y, clk);
    end
 
    // Draw (part 2) at X and Y
+
+   
    
 		   
 
@@ -82,7 +84,8 @@ module update_ball(X, Y, clk, dir, X0, Y0);
 	//     01 up left
 	//     10 down right
 	//     11 down left
-   output reg [9:0] 	    X0;
+   output reg [9:0] X0;
+   
    output reg [9:0] 	    Y0;
  
    
@@ -93,6 +96,7 @@ module update_ball(X, Y, clk, dir, X0, Y0);
       X0 = X;
       Y0 = Y;
    end
+   
    assign dir0 = dir;
 
 	always @(posedge clk)begin
