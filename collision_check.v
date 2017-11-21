@@ -32,6 +32,8 @@ module edge_check(X, Y, xstep, ystep, collision, clk);
    always @(posedge clk) begin
       if (X + xstep >=  9'b111100000)
 	collision <= 2'b10;
+      else if (X - xstep <= 1'b0)
+	collision <= 2'b10;
       else if (Y + ystep >= 10'b1010000000)
 	collision <= 2'b11;
       else if (Y - ystep <= 1'b0)
@@ -39,9 +41,6 @@ module edge_check(X, Y, xstep, ystep, collision, clk);
       else
 	collision <= 2'b00;
    end
-
-
-
    
 endmodule // edge_check
 

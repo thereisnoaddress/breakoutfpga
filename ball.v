@@ -8,6 +8,7 @@ module move_ball(X, Y, clk);
    wire [1:0]  collision;
    wire [1:0]  dir;
    wire [1:0]  newdir;
+   wire        gameover;
    reg [9:0]  newX, newY;
    
 
