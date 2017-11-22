@@ -1,4 +1,4 @@
-module move_ball(X, Y, clk);
+module move_ball(X, Y, clk, newX, newY);
 
    input [9:0] X;
    input [9:0] Y;
@@ -9,7 +9,7 @@ module move_ball(X, Y, clk);
    wire [1:0]  dir;
    wire [1:0]  newdir;
    wire        gameover;
-   reg [9:0]  newX, newY;
+   output reg [9:0]  newX, newY;
    
 
 
