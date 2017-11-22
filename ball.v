@@ -5,7 +5,7 @@ module move_ball(X, Y, clk, newX, newY);
    input       clk;
    
 
-   wire [1:0]  collision;
+   wire [1:0]  edge_collision, brick_collision, edge_collision;
    wire [1:0]  dir;
    wire [1:0]  newdir;
    wire        gameover;
@@ -30,6 +30,16 @@ module move_ball(X, Y, clk, newX, newY);
 		   .clk(clk),
 		   .collision(collision)
 		   );
+
+
+   // check brick collision
+
+   
+
+
+
+
+   // check paddle collision
 
    always @(posedge clk) begin
       if (collision != 2'b00)
