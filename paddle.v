@@ -1,33 +1,34 @@
-module paddle_shift(clk, KEY, X);
+module paddle(X, clk, resetn, left, right, X0);
 	
 	input clk;
-	input [2:0] KEY; // KEY[0] moves right, KEY[1] moves left
-					// KEY[2] resets
-	output [9:0] X;
-	reg [9:0] X; 
+	input [9:0] X;
+	input resetn;
+	input left;
+	input right;
+	output reg [9:0] X0; 
 
-	always @(posedge clk, negedge KEY[2])
+	always @(*)
 	// Move to the left
-		if (KEY[1]) begin
+		if (left == 1'd1) begin
 			if (X - 6'b101000- 1'b1 <= 1'b0) 
-			  X <= 1'b1 + 6'b101000;
+			  X0 <= 1'b1 + 6'b101000;
 		   
 			else
-				X <= X - 1;
+				X0 <= X - 1;
 			end
 		
 
 	// Move to the right
-		else if (KEY[0]) begin
+		else if (right == 1'd1) begin
 			if (X + 6'b101000 + 1'b1 >= 9'b111100000) 
-				X <= X;
+				X0 <= X;
 			else
-				X <= X + 1;
+				X0 <= X + 1;
 		end
 
 
-	else if (KEY[2] == 1'b1) 
-		X <= 9'b101000000;
+	else if (resetn == 1'b1) 
+		X0 <= 9'b101000000;
 
 endmodule // paddleshift
 

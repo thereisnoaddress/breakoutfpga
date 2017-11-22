@@ -45,23 +45,24 @@ module datapath(
 	 reg[6:0] counterY = 7'd0;
 	 reg[0:0] next = 1'd0;
 	
-	 reg[7:0] changedPaddleX = 8'd0; //7
+	 wire[7:0] changedPaddleX; //7
 	 reg[7:0] oldPaddleX = 8'd0;  // 6
 	 reg[7:0] paddleX = 8'd240;  /// 7
 	 reg[6:0] paddleY = 7'd440;
 	 
 	
-	 reg[7:0] changedBallX = 8'd0;
-	 reg[7:0] changedBallY = 7'd0;
+	 wire[7:0] changedBallX;
+	 wire[7:0] changedBallY;
 	 reg[7:0] oldBallX = 8'd0;
 	 reg[6:0] oldBallY = 7'd0;
 	 reg[7:0] ballX = 8'd0;
 	 reg[6:0] ballY = 7'd0;
 	 
 	 reg[11:0] brick_status;
+	 wire[3:0]curBrick;
 	 
-	 ball b(.X(ballX), .Y(ballY), .clk(clk), .newX(changedBallX), .newY(changedBallY), .brick_status(brick_status), .paddle_location(paddleX), .brick_num(whichBrick));
-    paddle_shift paddle(.clk(clk), .KEY({resetn,left,right}), .X(paddleX));
+	 ball b(.X(ballX), .Y(ballY), .clk(clk), .newX(changedBallX), .newY(changedBallY), .brick_status(brick_status), .paddle_location(paddleX), .brick_num(curBrick));
+    paddle p1(.clk(clk), .left(left), .right(right), .resetn(resetn), .X(paddleX), .X0(changedPaddleX));
 	 
     // Output result register
 	 
@@ -1143,6 +1144,11 @@ module datapath(
 					
 					oldBallY = ballY;
 					ballY <= changedBallY;
+				end
+				
+				if(ld_collide == 1'b1)
+				begin
+					whichBrick <= curBrick;
 				end
 				
 				
