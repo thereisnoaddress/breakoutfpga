@@ -16,6 +16,12 @@ add wave {/*}
 # SW[9:0] input values
 
 force {clk} 0 0, 1 1 -r 2
+#force {x} 8'd0 0
+#force {y} 7'd0 0
+#force {width} 8'd2 0
+#force {height} 7'd3 0 
+#force {canDraw} 1'b1 0
+
 force {resetn} 0 0, 1 3
 force {ld_draw} 1 10
 force {ld_reset} 1 0, 0 5

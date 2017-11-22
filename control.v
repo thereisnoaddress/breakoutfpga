@@ -125,18 +125,18 @@ module control(
 					if (whichBrick == 4'd12)
 						next_state = S_REMOVE_BRICK12;	
 					end
-					S_REMOVE_BRICK1: next_state = removing_brick1? S_REMOVE_BRICK1 : S_MOVE_PADDLE;
-					S_REMOVE_BRICK2: next_state = removing_brick2? S_REMOVE_BRICK2 : S_MOVE_PADDLE;
-					S_REMOVE_BRICK3: next_state = removing_brick3? S_REMOVE_BRICK3 : S_MOVE_PADDLE;
-					S_REMOVE_BRICK4: next_state = removing_brick4? S_REMOVE_BRICK4 : S_MOVE_PADDLE;
-					S_REMOVE_BRICK5: next_state = removing_brick5? S_REMOVE_BRICK5 : S_MOVE_PADDLE;
-					S_REMOVE_BRICK6: next_state = removing_brick6? S_REMOVE_BRICK6 : S_MOVE_PADDLE;
-					S_REMOVE_BRICK7: next_state = removing_brick7? S_REMOVE_BRICK7 : S_MOVE_PADDLE;
-					S_REMOVE_BRICK8: next_state = removing_brick8? S_REMOVE_BRICK8 : S_MOVE_PADDLE;
-					S_REMOVE_BRICK9: next_state = removing_brick9? S_REMOVE_BRICK9: S_MOVE_PADDLE;
-					S_REMOVE_BRICK10: next_state = removing_brick10? S_REMOVE_BRICK10 : S_MOVE_PADDLE;
-					S_REMOVE_BRICK11: next_state = removing_brick11? S_REMOVE_BRICK11 : S_MOVE_PADDLE;					
-					S_REMOVE_BRICK12: next_state = removing_brick12? S_REMOVE_BRICK12 : S_MOVE_PADDLE;					
+					S_REMOVE_BRICK1: next_state = removing_brick1? S_REMOVE_BRICK1 : S_RESET_ALL_LOOP;
+					S_REMOVE_BRICK2: next_state = removing_brick2? S_REMOVE_BRICK2 : S_RESET_ALL_LOOP;
+					S_REMOVE_BRICK3: next_state = removing_brick3? S_REMOVE_BRICK3 : S_RESET_ALL_LOOP;
+					S_REMOVE_BRICK4: next_state = removing_brick4? S_REMOVE_BRICK4 : S_RESET_ALL_LOOP;
+					S_REMOVE_BRICK5: next_state = removing_brick5? S_REMOVE_BRICK5 : S_RESET_ALL_LOOP;
+					S_REMOVE_BRICK6: next_state = removing_brick6? S_REMOVE_BRICK6 : S_RESET_ALL_LOOP;
+					S_REMOVE_BRICK7: next_state = removing_brick7? S_REMOVE_BRICK7 : S_RESET_ALL_LOOP;
+					S_REMOVE_BRICK8: next_state = removing_brick8? S_REMOVE_BRICK8 : S_RESET_ALL_LOOP;
+					S_REMOVE_BRICK9: next_state = removing_brick9? S_REMOVE_BRICK9: S_RESET_ALL_LOOP;
+					S_REMOVE_BRICK10: next_state = removing_brick10? S_REMOVE_BRICK10 : S_RESET_ALL_LOOP;
+					S_REMOVE_BRICK11: next_state = removing_brick11? S_REMOVE_BRICK11 : S_RESET_ALL_LOOP;					
+					S_REMOVE_BRICK12: next_state = removing_brick12? S_REMOVE_BRICK12 : S_RESET_ALL_LOOP;					
 				
 			
 				default:     next_state = S_POPULATE_BRICK1;
@@ -288,7 +288,7 @@ module control(
 					 end        
 		  S_ERASE_OLD_PADDLE: 
 		      begin
-				    ld_draw = 5'd14;
+				    ld_draw = 5'd13;
 					 ld_movePaddle = 1'd0;
 				    ld_moveBall = 1'd0;
 				    ld_collide = 1'd0;
@@ -297,7 +297,7 @@ module control(
 					 end 				 
 		  S_DRAW_PADDLE: 
 		      begin
-				    ld_draw = 5'd13;
+				    ld_draw = 5'd14;
 					 ld_movePaddle = 1'd0;
 				    ld_moveBall = 1'd0;
 				    ld_collide = 1'd0;
@@ -312,11 +312,10 @@ module control(
 				    ld_moveBall = 1'd1;
 				    ld_collide = 1'd0;
 					 ld_reset = 1'd0;
-
 					 end      
 		  S_ERASE_OLD_BALL: 
 		      begin
-				    ld_draw = 5'd16;
+				    ld_draw = 5'd15;
 					 ld_movePaddle = 1'd0;
 				    ld_moveBall = 1'd0;
 				    ld_collide = 1'd0;
@@ -325,7 +324,7 @@ module control(
 					 end					 
 		  S_DRAW_BALL: 
 		      begin
-				    ld_draw = 5'd15;
+				    ld_draw = 5'd16;
 					 ld_movePaddle = 1'd0;
 				    ld_moveBall = 1'd0;
 				    ld_collide = 1'd0;
