@@ -1,4 +1,4 @@
-module ball(X, Y, clk, newX, newY, brick_status, paddle_location);
+module ball(X, Y, clk, newX, newY, brick_status, paddle_location, brick_num);
 
    input [9:0] X;
    input [9:0] Y;
@@ -9,7 +9,7 @@ module ball(X, Y, clk, newX, newY, brick_status, paddle_location);
    
 
    wire [1:0]  edge_collision;
-   wire [9:0]  brick_num;
+   output [9:0]  brick_num;
    wire [1:0]  brick_collision;
    
    wire [1:0]  dir;

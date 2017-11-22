@@ -30,7 +30,7 @@ module control(
 	 input removing_brick11,
 	 input removing_brick12,
 	 input[3:0] whichBrick,
-    output reg  [4:0]ld_draw, output reg[0:0]ld_movePaddle, output reg [0:0]ld_moveBall, output reg [0:0]ld_collide, output reg[0:0] ld_reset
+    output reg  [4:0]ld_draw, output reg[0:0]ld_movePaddle, output reg [0:0]ld_moveBall, output reg [0:0]ld_collide, output reg[0:0] ld_resetInitial, output reg[0:0] ld_resetLoop
     );
 
     reg [3:0] current_state, next_state; 
@@ -151,16 +151,18 @@ module control(
         ld_movePaddle = 1'b0;
         ld_moveBall = 1'b0;
         ld_collide = 1'b0;
-        ld_reset = 1'b0;
+        ld_resetInitial = 1'b0;
+        ld_resetLoop = 1'b0;
 
         case (current_state)
 		  S_RESET_ALL_INITIAL:
 				begin
-					ld_reset = 1'd1;
+					ld_resetInitial = 1'd1;
 					ld_draw = 5'd0;
 					ld_movePaddle = 1'd0;
 				   ld_moveBall = 1'd0;
 				   ld_collide = 1'd0;
+					ld_resetLoop = 1'd0;
 				end
 		  S_POPULATE_BRICK1: 
 		      begin
@@ -168,7 +170,8 @@ module control(
 					 ld_movePaddle = 1'd0;
 				    ld_moveBall = 1'd0;
 				    ld_collide = 1'd0;
-					 ld_reset = 1'd0;
+					 ld_resetInitial = 1'd0;
+					 ld_resetLoop = 1'd0;
 			   end
 		  S_POPULATE_BRICK2: 
 		      begin
@@ -176,7 +179,8 @@ module control(
 					 ld_movePaddle = 1'd0;
 				    ld_moveBall = 1'd0;
 				    ld_collide = 1'd0;
-					 ld_reset = 1'd0;
+					 ld_resetInitial = 1'd0;
+					 ld_resetLoop = 1'd0;
 
 			   end           			
 		  S_POPULATE_BRICK3: 
@@ -185,7 +189,8 @@ module control(
 					 ld_movePaddle = 1'd0;
 				    ld_moveBall = 1'd0;
 				    ld_collide = 1'd0;
-					 ld_reset = 1'd0;
+					 ld_resetInitial = 1'd0;
+					 ld_resetLoop = 1'd0;
 
 			   end           		
 		  S_POPULATE_BRICK4: 
@@ -194,7 +199,8 @@ module control(
 					 ld_movePaddle = 1'd0;
 				    ld_moveBall = 1'd0;
 				    ld_collide = 1'd0;
-					 ld_reset = 1'd0;
+					 ld_resetInitial = 1'd0;
+					 ld_resetLoop = 1'd0;
 
 					 end      
 		  S_POPULATE_BRICK5: 
@@ -203,7 +209,8 @@ module control(
 					 ld_movePaddle = 1'd0;
 				    ld_moveBall = 1'd0;
 				    ld_collide = 1'd0;
-					 ld_reset = 1'd0;
+					 ld_resetInitial = 1'd0;
+					 ld_resetLoop = 1'd0;
 
 					 end      				
 		  S_POPULATE_BRICK6: 
@@ -212,7 +219,8 @@ module control(
 					 ld_movePaddle = 1'd0;
 				    ld_moveBall = 1'd0;
 				    ld_collide = 1'd0;
-					 ld_reset = 1'd0;
+					 ld_resetInitial = 1'd0;
+					 ld_resetLoop = 1'd0;
 
 					 end
 		  S_POPULATE_BRICK7: 
@@ -221,7 +229,8 @@ module control(
 					 ld_movePaddle = 1'd0;
 				    ld_moveBall = 1'd0;
 				    ld_collide = 1'd0;
-					 ld_reset = 1'd0;
+					 ld_resetInitial = 1'd0;
+					 ld_resetLoop = 1'd0;
 
 					 end           			
 		  S_POPULATE_BRICK8: 
@@ -230,7 +239,8 @@ module control(
 					 ld_movePaddle = 1'd0;
 				    ld_moveBall = 1'd0;
 				    ld_collide = 1'd0;
-					 ld_reset = 1'd0;
+					 ld_resetInitial = 1'd0;
+					 ld_resetLoop = 1'd0;
 
 					 end           		
 		  S_POPULATE_BRICK9: 
@@ -239,7 +249,8 @@ module control(
 					 ld_movePaddle = 1'd0;
 				    ld_moveBall = 1'd0;
 				    ld_collide = 1'd0;
-					 ld_reset = 1'd0;
+					 ld_resetInitial = 1'd0;
+					 ld_resetLoop = 1'd0;
 
 					 end           		
 		  S_POPULATE_BRICK10: 
@@ -248,7 +259,8 @@ module control(
 					 ld_movePaddle = 1'd0;
 				    ld_moveBall = 1'd0;
 				    ld_collide = 1'd0;
-					 ld_reset = 1'd0;
+					 ld_resetInitial = 1'd0;
+					 ld_resetLoop = 1'd0;
 
 					 end
 		  S_POPULATE_BRICK11: 
@@ -257,7 +269,8 @@ module control(
 					 ld_movePaddle = 1'd0;
 				    ld_moveBall = 1'd0;
 				    ld_collide = 1'd0;
-					 ld_reset = 1'd0;
+					 ld_resetInitial = 1'd0;
+					 ld_resetLoop = 1'd0;
 
 					 end           			
 		  S_POPULATE_BRICK12: 
@@ -266,7 +279,8 @@ module control(
 					 ld_movePaddle = 1'd0;
 				    ld_moveBall = 1'd0;
 				    ld_collide = 1'd0;
-					 ld_reset = 1'd0;
+					 ld_resetInitial = 1'd0;
+					 ld_resetLoop = 1'd0;
 
 					 end   
 			S_RESET_ALL_LOOP:
@@ -275,7 +289,8 @@ module control(
 					ld_movePaddle = 1'd0;
 					ld_moveBall = 1'd0;
 					ld_collide = 1'd0;
-					ld_reset = 1'd1;
+					ld_resetInitial = 1'd0;
+					ld_resetLoop = 1'd1;
 				end
 		  S_MOVE_PADDLE: 
 		      begin
@@ -283,7 +298,8 @@ module control(
 					 ld_movePaddle = 1'd1;
 				    ld_moveBall = 1'd0;
 				    ld_collide = 1'd0;
-					 ld_reset = 1'd0;
+					 ld_resetInitial = 1'd0;
+					 ld_resetLoop = 1'd0;
 
 					 end        
 		  S_ERASE_OLD_PADDLE: 
@@ -292,7 +308,8 @@ module control(
 					 ld_movePaddle = 1'd0;
 				    ld_moveBall = 1'd0;
 				    ld_collide = 1'd0;
-					 ld_reset = 1'd0;
+					 ld_resetInitial = 1'd0;
+					 ld_resetLoop = 1'd0;
 
 					 end 				 
 		  S_DRAW_PADDLE: 
@@ -301,7 +318,8 @@ module control(
 					 ld_movePaddle = 1'd0;
 				    ld_moveBall = 1'd0;
 				    ld_collide = 1'd0;
-					 ld_reset = 1'd0;
+					 ld_resetInitial = 1'd0;
+					 ld_resetLoop = 1'd0;
 
 					 end           		
           		
@@ -311,7 +329,8 @@ module control(
 					 ld_movePaddle = 1'd0;
 				    ld_moveBall = 1'd1;
 				    ld_collide = 1'd0;
-					 ld_reset = 1'd0;
+					 ld_resetInitial = 1'd0;
+					 ld_resetLoop = 1'd0;
 					 end      
 		  S_ERASE_OLD_BALL: 
 		      begin
@@ -319,7 +338,8 @@ module control(
 					 ld_movePaddle = 1'd0;
 				    ld_moveBall = 1'd0;
 				    ld_collide = 1'd0;
-					 ld_reset = 1'd0;
+					 ld_resetInitial = 1'd0;
+					 ld_resetLoop = 1'd0;
 
 					 end					 
 		  S_DRAW_BALL: 
@@ -328,7 +348,8 @@ module control(
 					 ld_movePaddle = 1'd0;
 				    ld_moveBall = 1'd0;
 				    ld_collide = 1'd0;
-					 ld_reset = 1'd0;
+					 ld_resetInitial = 1'd0;
+					 ld_resetLoop = 1'd0;
 
 					 end
 
@@ -338,7 +359,8 @@ module control(
 					 ld_movePaddle = 1'd0;
 				    ld_moveBall = 1'd0;
 				    ld_collide = 1'd1;
-					 ld_reset = 1'd0;
+					 ld_resetInitial = 1'd0;
+					 ld_resetLoop = 1'd0;
 
 					 end
 		  S_REMOVE_BRICK1: 
@@ -347,7 +369,8 @@ module control(
 					 ld_movePaddle = 1'd0;
 				    ld_moveBall = 1'd0;
 				    ld_collide = 1'd0;
-					 ld_reset = 1'd0;
+					 ld_resetInitial = 1'd0;
+					 ld_resetLoop = 1'd0;
 
 					 end
 		  S_REMOVE_BRICK2: 
@@ -356,7 +379,8 @@ module control(
 					 ld_movePaddle = 1'd0;
 				    ld_moveBall = 1'd0;
 				    ld_collide = 1'd0;
-					 ld_reset = 1'd0;
+					 ld_resetInitial = 1'd0;
+					 ld_resetLoop = 1'd0;
 
 					 end           			
 		  S_REMOVE_BRICK3: 
@@ -365,7 +389,8 @@ module control(
 					 ld_movePaddle = 1'd0;
 				    ld_moveBall = 1'd0;
 				    ld_collide = 1'd0;
-					 ld_reset = 1'd0;
+					 ld_resetInitial = 1'd0;
+					 ld_resetLoop = 1'd0;
 
 					 end           		
 		  S_REMOVE_BRICK4: 
@@ -374,7 +399,8 @@ module control(
 					 ld_movePaddle = 1'd0;
 				    ld_moveBall = 1'd0;
 				    ld_collide = 1'd0;
-					 ld_reset = 1'd0;
+					 ld_resetInitial = 1'd0;
+					 ld_resetLoop = 1'd0;
 
 					 end           		
 		  S_REMOVE_BRICK5: 
@@ -383,7 +409,8 @@ module control(
 					 ld_movePaddle = 1'd0;
 				    ld_moveBall = 1'd0;
 				    ld_collide = 1'd0;
-					 ld_reset = 1'd0;
+					 ld_resetInitial = 1'd0;
+					 ld_resetLoop = 1'd0;
 
 					 end
 		  S_REMOVE_BRICK6: 
@@ -392,7 +419,8 @@ module control(
 					 ld_movePaddle = 1'd0;
 				    ld_moveBall = 1'd0;
 				    ld_collide = 1'd0;
-					 ld_reset = 1'd0;
+					 ld_resetInitial = 1'd0;
+					 ld_resetLoop = 1'd0;
 
 					 end           			
 		  S_REMOVE_BRICK7: 
@@ -401,7 +429,8 @@ module control(
 					 ld_movePaddle = 1'd0;
 				    ld_moveBall = 1'd0;
 				    ld_collide = 1'd0;
-					 ld_reset = 1'd0;
+					 ld_resetInitial = 1'd0;
+					 ld_resetLoop = 1'd0;
 
 					 end           		
 		  S_REMOVE_BRICK8: 
@@ -410,7 +439,8 @@ module control(
 					 ld_movePaddle = 1'd0;
 				    ld_moveBall = 1'd0;
 				    ld_collide = 1'd0;
-					 ld_reset = 1'd0;
+					 ld_resetInitial = 1'd0;
+					 ld_resetLoop = 1'd0;
 
 					 end           		
 		  S_REMOVE_BRICK9: 
@@ -419,7 +449,8 @@ module control(
 					 ld_movePaddle = 1'd0;
 				    ld_moveBall = 1'd0;
 				    ld_collide = 1'd0;
-					 ld_reset = 1'd0;
+					 ld_resetInitial = 1'd0;
+					 ld_resetLoop = 1'd0;
 
 					 end
 		  S_REMOVE_BRICK10: 
@@ -428,7 +459,8 @@ module control(
 					 ld_movePaddle = 1'd0;
 				    ld_moveBall = 1'd0;
 				    ld_collide = 1'd0;
-					 ld_reset = 1'd0;
+					 ld_resetInitial = 1'd0;
+					 ld_resetLoop = 1'd0;
 
 					 end           			
 		  S_REMOVE_BRICK11: 
@@ -437,7 +469,8 @@ module control(
 					 ld_movePaddle = 1'd0;
 				    ld_moveBall = 1'd0;
 				    ld_collide = 1'd0;
-					 ld_reset = 1'd0;
+					 ld_resetInitial = 1'd0;
+					 ld_resetLoop = 1'd0;
 
 					 end   
 		  S_REMOVE_BRICK12: 
@@ -446,7 +479,8 @@ module control(
 					 ld_movePaddle = 1'd0;
 				    ld_moveBall = 1'd0;
 				    ld_collide = 1'd0;
-					 ld_reset = 1'd0;
+					 ld_resetInitial = 1'd0;
+					 ld_resetLoop = 1'd0;
 
 					 end   
 				
