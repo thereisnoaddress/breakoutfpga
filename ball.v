@@ -13,11 +13,13 @@ module ball(X, Y, clk, newX, newY, brick_status, paddle_location);
    wire [1:0]  brick_collision;
    
    wire [1:0]  dir;
-   wire [1:0]  newdir;
-   wire        gameover, paddle_collision;
+	reg [9:0] xint, yint;
+   wire [1:0]  edge_newdir, brick_newdir, paddle_newdir;
+	reg [1:0] newdir;
+   reg       gameover, paddle_collision;
 	wire [9:0] brickx, bricky;
    
-   output reg [9:0]  newX, newY;
+   output wire [9:0]  newX, newY;
    
 
 
@@ -49,42 +51,45 @@ module ball(X, Y, clk, newX, newY, brick_status, paddle_location);
 		 .bricknum(brick_num)
 		 );
    
-	reversewhichbrick rwb(
-				    .bricknum(brick_num),
-				    .X(brickx),
-				    .Y(bricky)
-				    );
-	      
-
-	      collision_check cc(
-				 .X0(X),
-				 .Y0(Y),
-				 .X1(brickx),
-				 .Y1(bricky),
-				 .xstep(xstep),
-				 .ystep(ystep),
-				 .clk(clk),
-				 .collision(brick_collision)
-				 );
-
-	 change_direction_collision cdc(
-			 .collision_code(collision),
-			 .original_dir(dir),
-			 .new_dir(newdir)
+   reversewhichbrick rwb(
+			 .bricknum(brick_num),
+			 .X(brickx),
+			 .Y(bricky)
 			 );
+   
 
-	  change_direction_collision cdc(
-					 .collision_code(2'b11),
-					 .original_dir(dir),
-					 .new_dir(newdir)
-					 );
-					 
-					 
-		 change_direction_collision cdc(
-				       .collision_code(brick_collision),
-				       .original_dir(dir),
-				       .new_dir(newdir)
-				       );
+   collision_check cc(
+		      .X0(X),
+		      .Y0(Y),
+		      .X1(brickx),
+		      .Y1(bricky),
+		      .xstep(xstep),
+		      .ystep(ystep),
+		      .clk(clk),
+		      .collision(brick_collision)
+		      );
+
+   // edge collision
+
+   change_direction_collision cdc0(
+				  .collision_code(collision),
+				  .original_dir(dir),
+				  .new_dir(edge_newdir)
+				  );
+
+   // paddle collision
+   change_direction_collision cdc1(
+				  .collision_code(2'b11),
+				  .original_dir(dir),
+				  .new_dir(paddle_newdir)
+				  );
+   
+   // brick collision
+   change_direction_collision cdc2(
+				  .collision_code(brick_collision),
+				  .original_dir(dir),
+				  .new_dir(brick_newdir)
+				  );
 
    always @(posedge clk) begin
 
@@ -92,15 +97,15 @@ module ball(X, Y, clk, newX, newY, brick_status, paddle_location);
       
       
 		case (dir)
-		2'b01: X <= -X;
-		2'b10: Y <= -Y;
+		2'b01: xint<= -X;
+		2'b10: yint <= -Y;
 		2'b11: begin
-			X <= -X;
-			Y <= -Y;
+			xint <= -X;
+			yint <= -Y;
 		end
 		default: begin
-		X <= X;
-		Y <= Y;
+		xint <= X;
+		yint <= Y;
 		end
 		
 		endcase
@@ -109,10 +114,11 @@ module ball(X, Y, clk, newX, newY, brick_status, paddle_location);
 
 
 	
+	
       // Check paddle collision
       if (dir == 2'b10 || dir == 2'b11) begin
 
-	 if ((paddle_location - 6'b101000 <= X + xstep) && (X + xstep <= paddle_location + 6'b101000) && (Y+ ystep <= 5'b10100 ) ) begin
+	 if ((paddle_location - 6'b101000 <= xint + xstep) && (xint + xstep <= paddle_location + 6'b101000) && (yint+ ystep <= 5'b10100 ) ) begin
 
 	    paddle_collision <= 1'b1;
 	    
@@ -121,36 +127,26 @@ module ball(X, Y, clk, newX, newY, brick_status, paddle_location);
       end // if (dir == 2'b10 || dir == 2'b11)
 
 
-     // Check brick collision
-
-	if (brick_num != 4'b1111) begin
-
-	   if (brick_status[brick_num] == 1'b1) begin
-
-
-	      
-
-	   end // end of inner loop
-
-
-	end // end brick_collision
-	
-	
-	
-
 
 	// check edge collision
 	if (edge_collision != 2'b00)
+	  newdir <= edge_newdir;
+      
 	
 
 
 	// check paddle collision
 	else if (paddle_collision == 1'b1 )
+	  newdir <= paddle_newdir;
+      
 
 	 
 
          // check brick collision	  
-	  else if (brick_collision != 2'b00)
+	else if ((brick_num != 4'b1111) && (brick_status[brick_num] == 1'b1) && (brick_collision != 2'b00))
+
+	  newdir <= brick_newdir;
+      
 	    
 	  else
 	    
@@ -161,27 +157,20 @@ module ball(X, Y, clk, newX, newY, brick_status, paddle_location);
    
 
    update_ball ub(
-		  .X(X),
-		  .Y(Y),
+		  .X(xint),
+		  .Y(yint),
 		  .clk(clk),
 		  .dir(newdir),
 		  .X0(newX),
 		  .Y0(newY)
 		  );
   
-   
-   always @(posedge clk) begin
-      X = newX;
-      Y = newY;
-   end
 
- 
-   
-   
-		   
 
 
 endmodule // move_ball
+
+
 
 
 
@@ -205,34 +194,34 @@ module update_ball(X, Y, clk, dir, X0, Y0);
    
        
         wire [1:0] dir0;
-   always @(posedge clk) begin
-      
-      X0 = X;
-      Y0 = Y;
-   end
+
    
    assign dir0 = dir;
 
 	always @(posedge clk)begin
+	
+	
+	      X0 <= X;
+			Y0 <= Y;
 		case(dir0)
 			2'b00: begin
-			   X0 <= X0 + 1;
-			   Y0 <= Y0 + 1;
+			   X0 <= X0 + 1'b1;
+			   Y0 <= Y0 + 1'b1;
 			end
 		  
 			2'b01: begin
-			   X0 <= X0 - 1; 
-			   Y0 <= Y0 + 1;
+			   X0 <= X0 - 1'b1; 
+			   Y0 <= Y0 + 1'b1;
 			end
 		  
 			2'b10: begin
-			   X0 <= X0 + 1; 
-			   Y0 <= Y0 - 1;
+			   X0 <= X0 + 1'b1; 
+			   Y0 <= Y0 - 1'b1;
 			end
 		  
 			2'b11: begin
-			   X0 <= X0 - 1; 
-			   Y0 <= Y0 - 1;
+			   X0 <= X0 - 1'b1; 
+			   Y0 <= Y0 - 1'b1;
 			end
 		  
 		default: begin
