@@ -21,13 +21,12 @@ format:
 */
 
 // Check if X0 + xstep >= X1 or Y0 + ystep >= Y1
-module collision_check(gamematrix, X0, Y0, X1, Y1, xstep, ystep, collision, clk);
+module collision_check(X0, Y0, X1, Y1, xstep, ystep, collision, clk);
 	input clk;
    
 	input [9:0] X0, X1; 
 	input [9:0] Y0, Y1;
 	input [6:0] xstep, ystep;
-	input clk;
 	output reg [1:0] collision; // MSB 0 if no collision, 1 if collision
 							// LSB 0 if X collision, 1 if Y collision
 	always @(posedge clk)begin
@@ -108,6 +107,10 @@ module whichbrick(X, Y, bricknum);
        bricknum <= 4'b1010;
       else if ((9'b110111000 <= X && X <= 10'b1000110000) && (8'b10001100 <= Y && Y <= 9'b100011000 ))
        bricknum <= 4'b1011;
+
+	else
+		bricknum<= 4'b1111;
+
    end
    
 
@@ -183,6 +186,7 @@ module reversewhichbrick(bricknum, X, Y);
 	   X <= 9'b110111000;
 	   Y <= 8'b10001100;
 	end
+	endcase
 
    end // always @ begin
 
@@ -202,8 +206,8 @@ module change_direction_collision(collision_code, original_dir, new_dir);
 
 
 	always @(*) begin
-	   if (collision_code[1] == 1) begin
-	      if (collision_code[0] == 0) begin // X collision
+	   if (collision_code[1] == 1) 
+	      if (collision_code[0] == 0)  // X collision
 		 case(original_dir)
 		   2'b00: new_dir = 2'b01;
 		   2'b01: new_dir = 2'b00;
@@ -211,8 +215,8 @@ module change_direction_collision(collision_code, original_dir, new_dir);
 		   2'b11: new_dir = 2'b10;
 		   default: new_dir = original_dir;
 		 endcase // original_dir
-	      end
-	      else if (collision_code[0] == 1) begin // Y collision
+	      
+	      else if (collision_code[0] == 1)  // Y collision
 		 case (original_dir)
 		   2'b00: new_dir = 2'b10; 
 		   2'b01: new_dir = 2'b11;
@@ -220,8 +224,8 @@ module change_direction_collision(collision_code, original_dir, new_dir);
 		   2'b11: new_dir = 2'b01;
 		   default : new_dir = original_dir;
 		 endcase
-	      end
-	   end // if (collision_code[0] == 1)
+	      
+	  
 	end // always @ begin
    
 

@@ -1,14 +1,22 @@
-module move_ball(X, Y, clk, newX, newY);
+module ball(X, Y, clk, newX, newY, brick_status, paddle_location);
 
    input [9:0] X;
    input [9:0] Y;
    input       clk;
+   input [11:0] brick_status;
+   input [9:0] 	paddle_location;
+   
    
 
-   wire [1:0]  edge_collision, brick_collision, edge_collision;
+   wire [1:0]  edge_collision;
+   wire [9:0]  brick_num;
+   wire [1:0]  brick_collision;
+   
    wire [1:0]  dir;
    wire [1:0]  newdir;
-   wire        gameover;
+   wire        gameover, paddle_collision;
+	wire [9:0] brickx, bricky;
+   
    output reg [9:0]  newX, newY;
    
 
@@ -19,7 +27,8 @@ module move_ball(X, Y, clk, newX, newY);
    
    assign dir = startdir;
    
-
+	
+	
    // check edge collision
 
    edge_check edck(
@@ -28,30 +37,126 @@ module move_ball(X, Y, clk, newX, newY);
 		   .xstep(xstep),
 		   .ystep(ystep),
 		   .clk(clk),
-		   .collision(collision)
+		   .collision(edge_collision)
 		   );
 
 
    // check brick collision
-
+   // if there is no brick, return 4'b1111;
+   whichbrick wb(
+		 .X(X + xstep),
+		 .Y(Y + ystep),
+		 .bricknum(brick_num)
+		 );
    
+	reversewhichbrick rwb(
+				    .bricknum(brick_num),
+				    .X(brickx),
+				    .Y(bricky)
+				    );
+	      
 
+	      collision_check cc(
+				 .X0(X),
+				 .Y0(Y),
+				 .X1(brickx),
+				 .Y1(bricky),
+				 .xstep(xstep),
+				 .ystep(ystep),
+				 .clk(clk),
+				 .collision(brick_collision)
+				 );
 
+	 change_direction_collision cdc(
+			 .collision_code(collision),
+			 .original_dir(dir),
+			 .new_dir(newdir)
+			 );
 
-
-   // check paddle collision
-
-   always @(posedge clk) begin
-      if (collision != 2'b00)
-	change_direction_collision cdc(
-				       .collision_code(collision),
+	  change_direction_collision cdc(
+					 .collision_code(2'b11),
+					 .original_dir(dir),
+					 .new_dir(newdir)
+					 );
+					 
+					 
+		 change_direction_collision cdc(
+				       .collision_code(brick_collision),
 				       .original_dir(dir),
 				       .new_dir(newdir)
 				       );
-      else
-	newdir <= dir;
+
+   always @(posedge clk) begin
+
+      paddle_collision <= 1'b0;
       
-   end
+      
+		case (dir)
+		2'b01: X <= -X;
+		2'b10: Y <= -Y;
+		2'b11: begin
+			X <= -X;
+			Y <= -Y;
+		end
+		default: begin
+		X <= X;
+		Y <= Y;
+		end
+		
+		endcase
+
+      
+
+
+	
+      // Check paddle collision
+      if (dir == 2'b10 || dir == 2'b11) begin
+
+	 if ((paddle_location - 6'b101000 <= X + xstep) && (X + xstep <= paddle_location + 6'b101000) && (Y+ ystep <= 5'b10100 ) ) begin
+
+	    paddle_collision <= 1'b1;
+	    
+	 end // end of check paddle collision
+	 
+      end // if (dir == 2'b10 || dir == 2'b11)
+
+
+     // Check brick collision
+
+	if (brick_num != 4'b1111) begin
+
+	   if (brick_status[brick_num] == 1'b1) begin
+
+
+	      
+
+	   end // end of inner loop
+
+
+	end // end brick_collision
+	
+	
+	
+
+
+	// check edge collision
+	if (edge_collision != 2'b00)
+	
+
+
+	// check paddle collision
+	else if (paddle_collision == 1'b1 )
+
+	 
+
+         // check brick collision	  
+	  else if (brick_collision != 2'b00)
+	    
+	  else
+	    
+	    newdir <= dir;
+      
+   end // always 
 
    
 
@@ -70,8 +175,7 @@ module move_ball(X, Y, clk, newX, newY);
       Y = newY;
    end
 
-   // Draw (part 2) at X and Y
-
+ 
    
    
 		   
