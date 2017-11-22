@@ -80,39 +80,115 @@ module whichbrick(X, Y, bricknum);
    always @(*) begin
 
      // Check first row 
-     if ((20 <= X && X <= 140) && (20 <= Y && Y <= 60 ))
+     if ((5'b10100 <= X && X <= 8'b10001100) && (5'b10100 <= Y && Y <= 6'b111100 ))
        bricknum <= 4'b0000;
-     else if ((160 <= X && X <= 280) && (20 <= Y && Y <= 60 ))
+     else if ((8'b10100000 <= X && X <= 9'b100011000) && (5'b10100 <= Y && Y <= 6'b111100 ))
        bricknum <= 4'b0001;
-     else if ((300 <= X && X <= 420) && (20 <= Y && Y <= 60 ))
+     else if ((9'b100101100 <= X && X <= 9'b110100100) && (5'b10100 <= Y && Y <= 6'b111100 ))
        bricknum <= 4'b0010;
-     else if ((440 <= X && X <= 560) && (20 <= Y && Y <= 60 ))
+     else if ((9'b110111000 <= X && X <= 10'b1000110000) && (5'b10100 <= Y && Y <= 6'b111100 ))
        bricknum <= 4'b0011;
 
      // Check second row
-      else if ((20 <= X && X <= 140) && (80 <= Y && Y <= 120 ))
+      else if ((5'b10100 <= X && X <= 8'b10001100) && (7'b1010000 <= Y && Y <= 7'b1111000 ))
        bricknum <= 4'b0100;
-      else if ((160 <= X && X <= 280) && (80 <= Y && Y <= 120 ))
+      else if ((8'b10100000 <= X && X <= 9'b100011000) && (7'b1010000 <= Y && Y <= 7'b1111000 ))
        bricknum <= 4'b0101;
-      else if ((300 <= X && X <= 420) && (80 <= Y && Y <= 120 ))
+      else if ((9'b100101100 <= X && X <= 9'b110100100) && (7'b1010000 <= Y && Y <= 7'b1111000 ))
        bricknum <= 4'b0110;
-      else if ((440 <= X && X <= 560) && (80 <= Y && Y <= 120 ))
+      else if ((9'b110111000 <= X && X <= 10'b1000110000) && (7'b1010000 <= Y && Y <= 7'b1111000 ))
        bricknum <= 4'b0111;
 
       // Check third row
-      else if ((20 <= X && X <= 140) && (140 <= Y && Y <= 280 ))
+      else if ((5'b10100 <= X && X <= 8'b10001100) && (8'b10001100 <= Y && Y <= 9'b100011000 ))
 	bricknum <= 4'b1000;
-      else if ((160 <= X && X <= 280) && (140 <= Y && Y <= 280 ))
+      else if ((8'b10100000 <= X && X <= 9'b100011000) && (8'b10001100 <= Y && Y <= 9'b100011000 ))
        bricknum <= 4'b1001;
-      else if ((300 <= X && X <= 420) && (140 <= Y && Y <= 280 ))
+      else if ((9'b100101100 <= X && X <= 9'b110100100) && (8'b10001100 <= Y && Y <= 9'b100011000 ))
        bricknum <= 4'b1010;
-      else if ((440 <= X && X <= 560) && (140 <= Y && Y <= 280 ))
+      else if ((9'b110111000 <= X && X <= 10'b1000110000) && (8'b10001100 <= Y && Y <= 9'b100011000 ))
        bricknum <= 4'b1011;
    end
    
 
 endmodule // whichbrick
 
+
+
+module reversewhichbrick(bricknum, X, Y);
+
+   input [3:0] bricknum;
+   output reg[9:0] X, Y;
+
+
+   always @(*) begin
+      case (bricknum)
+
+	// First row
+	4'b0000: begin
+	   X <= 5'b10100;
+	   Y <= 5'b10100;
+	end
+	
+	4'b0001: begin
+	   X <= 8'b10100000;
+	   Y <= 5'b10100;
+	end
+	4'b0010: begin
+	   X <= 9'b100101100;
+	   Y <= 5'b10100;
+	end
+	4'b0011: begin
+	   X <= 9'b110111000;
+	   Y <= 5'b10100;
+	end
+	
+	
+	// Second row
+	4'b0100: begin
+	   X <= 5'b10100;
+	   Y <= 7'b1010000;
+	end
+	
+	4'b0101: begin
+	   X <= 8'b10100000;
+           Y <= 7'b1010000;
+	end
+	4'b0110: begin
+	   X <= 9'b100101100;
+	   Y <= 7'b1010000;
+	end
+	4'b0111: begin
+	   X <= 9'b110111000;
+	   Y <= 7'b1010000;
+	end
+
+
+
+	// Third row
+	4'b1000: begin
+	   X <= 5'b10100;
+	   Y <= 8'b10001100;
+	end
+	
+	4'b1001: begin
+	   X <= 8'b10100000;
+	   Y <= 8'b10001100;
+	end
+	4'b1010: begin
+	   X <= 9'b100101100;
+	   Y <= 8'b10001100;
+	end
+	4'b1011: begin
+	   X <= 9'b110111000;
+	   Y <= 8'b10001100;
+	end
+
+   end // always @ begin
+
+
+
+endmodule // reversewhichbrick
 
 
 
