@@ -14,7 +14,8 @@ module main
 		VGA_SYNC_N,						//	VGA SYNC
 		VGA_R,   						//	VGA Red[9:0]
 		VGA_G,	 						//	VGA Green[9:0]
-		VGA_B   						//	VGA Blue[9:0]
+		VGA_B,   						//	VGA Blue[9:0]
+		LEDR
 	);
 
 	input			CLOCK_50;				//	50 MHz
@@ -31,7 +32,7 @@ module main
 	output	[9:0]	VGA_R;   				//	VGA Red[9:0]
 	output	[9:0]	VGA_G;	 				//	VGA Green[9:0]
 	output	[9:0]	VGA_B;   				//	VGA Blue[9:0]
-	
+	output [7:0]LEDR;
 	wire resetn;
 	assign resetn = KEY[2];
 	
@@ -105,7 +106,8 @@ module main
 	 wire[0:0]ld_collide;
 	 wire[0:0]ld_resetInitial;
 	 wire[0:0]ld_resetLoop;
-
+	 wire[3:0] current;
+	 assign LEDR[7:0] = current;
 	 
     // Instansiate datapath
 	// datapath d0(...);
@@ -181,7 +183,8 @@ module main
 	 .removing_brick10(removing_brick10),
 	 .removing_brick11(removing_brick11),
 	 .removing_brick12(removing_brick12),
-	 .whichBrick(whichBrick)
+	 .whichBrick(whichBrick),
+	 .currrent(current)
 	 );
 
     // Instansiate FSM control

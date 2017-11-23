@@ -69,10 +69,10 @@ module datapath(
 
     always @ (posedge clk) begin
         if (!resetn) begin
-            out_x <= 8'd0; 
-				out_y <= 7'd0;
-				out_colour <= 3'd1;
-				enable <= 1'b0;
+         //   out_x <= 8'd0; 
+			//	out_y <= 7'd0;
+		//		out_colour <= 3'd1;
+		//		enable <= 1'b0;
         end
         else
 				if (ld_resetLoop == 1'd1)
@@ -146,16 +146,16 @@ module datapath(
 					removing_brick12<= 1'b1;
 				end
 				// don't draw anything
-				if (ld_draw == 4'd0)
+				if (ld_draw == 5'd0)
 				begin
 					enable <= 1'b0;
 				end
 				
 				
 				// populating brick 1 : x = 20 ; y = 20 ; width = 120 ; height = 40 
-            if(ld_draw == 4'd1 && populating_brick1 == 1'd1)
+            if(ld_draw == 5'd1 && populating_brick1 == 1'd1)
 				begin
-					out_colour<= 3'b111;	
+					out_colour<= 3'b100;	
 					enable <= 1'b1;
 					out_x <= 8'd20 + counterX;
 					out_y <= 7'd20 + counterY;
@@ -188,9 +188,9 @@ module datapath(
 				
 				
 					// populating bricK 2 : x = 160 ; y = 20 ; width = 120 ; height = 40 
-            if(ld_draw == 4'd2 && populating_brick2 == 1'd1)
+            if(ld_draw == 5'd2 && populating_brick2 == 1'd1)
 				begin
-					out_colour<= 3'b111;	
+					out_colour<= 3'b101;	
 					enable <= 1'b1;
 					out_x <= 8'd160 + counterX;
 					out_y <= 7'd20 + counterY;
@@ -222,9 +222,9 @@ module datapath(
 				end
 				
 				// populating bricK 3 : x = 300 ; y = 20 ; width = 120 ; height = 40 
-            if(ld_draw == 4'd3 && populating_brick3 == 1'd1)
+            if(ld_draw == 5'd3 && populating_brick3 == 1'd1)
 				begin
-					out_colour<= 3'b111;	
+					out_colour<= 3'b100;	
 					enable <= 1'b1;
 					out_x <= 8'd300 + counterX;
 					out_y <= 7'd20 + counterY;
@@ -256,9 +256,9 @@ module datapath(
 				end
 				
 				// populating bricK 4 : x = 440 ; y = 20 ; width = 120 ; height = 40 
-            if(ld_draw == 4'd4 && populating_brick4 == 1'd1)
+            if(ld_draw == 5'd4 && populating_brick4 == 1'd1)
 				begin
-					out_colour<= 3'b111;	
+					out_colour<= 3'b010;	
 					enable <= 1'b1;
 					out_x <= 8'd440 + counterX;
 					out_y <= 7'd20 + counterY;
@@ -290,9 +290,9 @@ module datapath(
 				end
 				
 				// populating brick 5 : x = 20 ; y = 80 ; width = 120 ; height = 40 
-            if(ld_draw == 4'd5 && populating_brick5 == 1'd1)
+            if(ld_draw == 5'd5 && populating_brick5 == 1'd1)
 				begin 
-					out_colour<= 3'b111;	
+					out_colour<= 3'b010;	
 					enable <= 1'b1;
 					out_x <= 8'd20 + counterX;
 					out_y <= 7'd80 + counterY;
@@ -325,9 +325,9 @@ module datapath(
 				
 				
 					// populating bricK 6 : x = 160 ; y =80 ; width = 120 ; height = 40 
-            if(ld_draw == 4'd6 && populating_brick6 == 1'd1)
+            if(ld_draw == 5'd6 && populating_brick6 == 1'd1)
 				begin
-					out_colour<= 3'b111;	
+					out_colour<= 3'b100;	
 					enable <= 1'b1;
 					out_x <= 8'd160 + counterX;
 					out_y <= 7'd80 + counterY;
@@ -359,9 +359,9 @@ module datapath(
 				end
 				
 				// populating bricK 7 : x = 300 ; y =80 ; width = 120 ; height = 40 
-            if(ld_draw == 4'd7 && populating_brick7 == 1'd1)
+            if(ld_draw == 5'd7 && populating_brick7 == 1'd1)
 				begin
-					out_colour<= 3'b111;	
+					out_colour<= 3'b001;	
 					enable <= 1'b1;
 					out_x <= 8'd300 + counterX;
 					out_y <= 7'd80 + counterY;
@@ -393,9 +393,9 @@ module datapath(
 				end
 				
 				// populating bricK 8 : x = 440 ; y = 80 ; width = 120 ; height = 40 
-            if(ld_draw == 4'd8 && populating_brick8 == 1'd1)
+            if(ld_draw == 5'd8 && populating_brick8 == 1'd1)
 				begin
-					out_colour<= 3'b111;	
+					out_colour<= 3'b100;	
 					enable <= 1'b1;
 					out_x <= 8'd440 + counterX;
 					out_y <= 7'd80 + counterY;
@@ -427,9 +427,9 @@ module datapath(
 				end
 		
 						// populating brick 9 : x = 20 ; y = 140 ; width = 120 ; height = 40 
-            if(ld_draw == 4'd9 && populating_brick9 == 1'd1)
+            if(ld_draw == 5'd9 && populating_brick9 == 1'd1)
 				begin
-					out_colour<= 3'b111;	
+					out_colour<= 3'b101;	
 					enable <= 1'b1;
 					out_x <= 8'd20 + counterX;
 					out_y <= 7'd140 + counterY;
@@ -462,9 +462,9 @@ module datapath(
 				
 				
 					// populating bricK 10 : x = 160 ; y =140 ; width = 120 ; height = 40 
-            if(ld_draw == 4'd10 && populating_brick10 == 1'd1)
+            if(ld_draw == 5'd10 && populating_brick10 == 1'd1)
 				begin
-					out_colour<= 3'b111;	
+					out_colour<= 3'b101;	
 					enable <= 1'b1;
 					out_x <= 8'd160 + counterX;
 					out_y <= 7'd140 + counterY;
@@ -496,9 +496,9 @@ module datapath(
 				end
 				
 				// populating bricK 11 : x = 300 ; y =140 ; width = 120 ; height = 40 
-            if(ld_draw == 4'd12 && populating_brick11 == 1'd1)
+            if(ld_draw == 5'd11 && populating_brick11 == 1'd1)
 				begin
-					out_colour<= 3'b111;	
+					out_colour<= 3'b011;	
 					enable <= 1'b1;
 					out_x <= 8'd300 + counterX;
 					out_y <= 7'd140 + counterY;
@@ -532,9 +532,9 @@ module datapath(
 
 
 				// populating bricK 12 : x = 440 ; y =140 ; width = 120 ; height = 40 
-            if(ld_draw == 4'd12 && populating_brick12 == 1'd1)
+            if(ld_draw == 5'd12 && populating_brick12 == 1'd1)
 				begin
-					out_colour<= 3'b111;	
+					out_colour<= 3'b101;	
 					enable <= 1'b1;
 					out_x <= 8'd440 + counterX;
 					out_y <= 7'd140 + counterY;
@@ -567,7 +567,7 @@ module datapath(
 				
 				
 				// erasing paddle : x = oldPaddleX ; y = oldPaddleY ; width = 80 ; height = 20 
-            if(ld_draw == 4'd13 && erasing_paddle == 1'd1)
+            if(ld_draw == 5'd13 && erasing_paddle == 1'd1)
 				begin
 					out_colour<= 3'b000;	
 					enable <= 1'b1;
@@ -602,9 +602,9 @@ module datapath(
 				
 				
 				// drawing paddle : x = paddleX ; y = paddleY ; width = 80 ; height = 20 
-            if(ld_draw == 4'd14 && drawing_paddle == 1'd1)
+            if(ld_draw == 5'd14 && drawing_paddle == 1'd1)
 				begin
-					out_colour<= 3'b101;	
+					out_colour<= 3'b111;	
 					enable <= 1'b1;
 					out_x <= paddleX + counterX;
 					out_y <= paddleY + counterY;
@@ -638,7 +638,7 @@ module datapath(
 				
 				
 				// erasing ball : x = oldBallX ; y = oldBallY ; width =30 ; height = 30 
-            if(ld_draw == 4'd15 && erasing_ball == 1'd1)
+            if(ld_draw == 5'd15 && erasing_ball == 1'd1)
 				begin
 					out_colour<= 3'b000;	
 					enable <= 1'b1;
@@ -671,9 +671,9 @@ module datapath(
 					end
 				end
 				// drawing ball : x = ballX ; y = ballY ; width =30 ; height = 30 
-            if(ld_draw == 4'd16 && drawing_ball == 1'd1)
+            if(ld_draw == 5'd16 && drawing_ball == 1'd1)
 				begin
-					out_colour<= 3'b100;	
+					out_colour<= 3'b110;	
 					enable <= 1'b1;
 					out_x <= ballX + counterX;
 					out_y <= ballY + counterY;
@@ -683,10 +683,10 @@ module datapath(
 						counterX <= counterX + 8'd1;
 						enable <= 1'b1;
 					end
-					else if (counterY != 8'd30)
+					else if (counterY != 7'd30)
 					begin
 						counterX <= 8'd0;
-						counterY <= counterY + 1;
+						counterY <= counterY + 7'd1;
 						enable <= 1'b1;
 					end
 					else if (next == 1'd0)
@@ -699,14 +699,14 @@ module datapath(
 						enable <= 1'b0;
 						drawing_ball <= 1'b0; 
 						counterX <= 8'd0;
-						counterY <= 8'd0;
+						counterY <= 7'd0;
 						next <= 1'b0;
 					end
 				end
 				
 			
 			// removing brick 1 : x = 20 ; y = 20 ; width = 120 ; height = 40 
-            if(ld_draw == 4'd17 && removing_brick1 == 1'd1)
+            if(ld_draw == 5'd17 && removing_brick1 == 1'd1)
 				begin
 					brick_status[0] <= 1'b0;
 					out_colour<= 3'b000;	
@@ -742,7 +742,7 @@ module datapath(
 				
 				
 					// erasing bricK 2 : x = 160 ; y = 20 ; width = 120 ; height = 40 
-            if(ld_draw == 4'd18 && removing_brick2 == 1'd1)
+            if(ld_draw == 5'd18 && removing_brick2 == 1'd1)
 				begin
 					brick_status[1] <= 1'b0;
 					out_colour<= 3'b000;	
@@ -777,7 +777,7 @@ module datapath(
 				end
 				
 				// erasing bricK 3 : x = 300 ; y = 20 ; width = 120 ; height = 40 
-            if(ld_draw == 4'd19 && removing_brick3 == 1'd1)
+            if(ld_draw == 5'd19 && removing_brick3 == 1'd1)
 				begin
 					brick_status[2] <= 1'b0;
 					out_colour<= 3'b000;	
@@ -812,10 +812,10 @@ module datapath(
 				end
 				
 				// erasing bricK 4 : x = 440 ; y = 20 ; width = 120 ; height = 40 
-            if(ld_draw == 4'd20 && removing_brick4 == 1'd1)
+            if(ld_draw == 5'd20 && removing_brick4 == 1'd1)
 				begin
 					brick_status[3] <= 1'b0;
-					out_colour<= 3'b111;	
+					out_colour<= 3'b000;	
 					enable <= 1'b1;
 					out_x <= 8'd440 + counterX;
 					out_y <= 7'd20 + counterY;
@@ -847,7 +847,7 @@ module datapath(
 				end
 				
 				// erasing brick 5 : x = 20 ; y = 80 ; width = 120 ; height = 40 
-            if(ld_draw == 4'd21 && removing_brick5 == 1'd1)
+            if(ld_draw == 5'd21 && removing_brick5 == 1'd1)
 				begin 
 					brick_status[4] <= 1'b0;
 					out_colour<= 3'b000;	
@@ -883,7 +883,7 @@ module datapath(
 				
 				
 					// erasing bricK 6 : x = 160 ; y =80 ; width = 120 ; height = 40 
-            if(ld_draw == 4'd22 && removing_brick6 == 1'd1)
+            if(ld_draw == 5'd22 && removing_brick6 == 1'd1)
 				begin
 					brick_status[5] <= 1'b0;
 					out_colour<= 3'b000;	
@@ -918,7 +918,7 @@ module datapath(
 				end
 				
 				// erasing bricK 7 : x = 300 ; y =80 ; width = 120 ; height = 40 
-            if(ld_draw == 4'd23 && removing_brick7 == 1'd1)
+            if(ld_draw == 5'd23 && removing_brick7 == 1'd1)
 				begin
 					brick_status[6] <= 1'b0;
 					out_colour<= 3'b000;	
@@ -953,7 +953,7 @@ module datapath(
 				end
 				
 				// erasing bricK 8 : x = 440 ; y = 80 ; width = 120 ; height = 40 
-            if(ld_draw == 4'd24 && removing_brick8 == 1'd1)
+            if(ld_draw == 5'd24 && removing_brick8 == 1'd1)
 				begin
 					brick_status[7] <= 1'b0;
 					out_colour<= 3'b000;	
@@ -988,7 +988,7 @@ module datapath(
 				end
 		
 						// erasing brick 9 : x = 20 ; y = 140 ; width = 120 ; height = 40 
-            if(ld_draw == 4'd25 && removing_brick9 == 1'd1)
+            if(ld_draw == 5'd25 && removing_brick9 == 1'd1)
 				begin
 					brick_status[8] <= 1'b0;
 					out_colour<= 3'b000;	
@@ -1024,7 +1024,7 @@ module datapath(
 				
 				
 					// erasing bricK 10 : x = 160 ; y =140 ; width = 120 ; height = 40 
-            if(ld_draw == 4'd26 && removing_brick10 == 1'd1)
+            if(ld_draw == 5'd26 && removing_brick10 == 1'd1)
 				begin
 					brick_status[9] <= 1'b0;
 					out_colour<= 3'b000;	
@@ -1059,7 +1059,7 @@ module datapath(
 				end
 				
 				// removing bricK 11 : x = 300 ; y =140 ; width = 120 ; height = 40 
-            if(ld_draw == 4'd27 && removing_brick11 == 1'd1)
+            if(ld_draw == 5'd27 && removing_brick11 == 1'd1)
 				begin
 					brick_status[10] <= 1'b0;
 					out_colour<= 3'b000;	
@@ -1096,7 +1096,7 @@ module datapath(
 
 
 				// populating bricK 12 : x = 440 ; y =140 ; width = 120 ; height = 40 
-            if(ld_draw == 4'd28 && removing_brick12 == 1'd1)
+            if(ld_draw == 5'd28 && removing_brick12 == 1'd1)
 				begin
 					brick_status[11] <= 1'b0;
 					out_colour<= 3'b000;	

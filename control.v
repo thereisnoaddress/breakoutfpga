@@ -30,11 +30,11 @@ module control(
 	 input removing_brick11,
 	 input removing_brick12,
 	 input[3:0] whichBrick,
-    output reg  [4:0]ld_draw, output reg[0:0]ld_movePaddle, output reg [0:0]ld_moveBall, output reg [0:0]ld_collide, output reg[0:0] ld_resetInitial, output reg[0:0] ld_resetLoop
+    output reg  [4:0]ld_draw, output reg[0:0]ld_movePaddle, output reg [0:0]ld_moveBall, output reg [0:0]ld_collide, output reg[0:0] ld_resetInitial, output reg[0:0] ld_resetLoop, output reg[7:0] currrent
     );
 
-    reg [3:0] current_state, next_state; 
 	 
+    reg [7:0] current_state, next_state; 
 	    localparam  
 					 S_RESET_ALL_INITIAL = 8'd0,
 					 S_POPULATE_BRICK1 = 8'd1,
@@ -93,7 +93,7 @@ module control(
 					S_MOVE_PADDLE: next_state = S_ERASE_OLD_PADDLE;
 					S_ERASE_OLD_PADDLE: next_state = erasing_paddle ? S_ERASE_OLD_PADDLE:S_DRAW_PADDLE;
 					S_DRAW_PADDLE: next_state = drawing_paddle ? S_DRAW_PADDLE : S_MOVE_BALL;
-					S_MOVE_BALL: next_state = S_DRAW_BALL;
+					S_MOVE_BALL: next_state = S_ERASE_OLD_BALL;
 					S_ERASE_OLD_BALL : next_state = erasing_ball ? S_ERASE_OLD_BALL: S_DRAW_BALL;
 					S_DRAW_BALL: next_state = drawing_ball ? S_DRAW_BALL : S_COLLISION;
 					S_COLLISION:
@@ -139,7 +139,7 @@ module control(
 					S_REMOVE_BRICK12: next_state = removing_brick12? S_REMOVE_BRICK12 : S_RESET_ALL_LOOP;					
 				
 			
-				default:     next_state = S_POPULATE_BRICK1;
+				default:     next_state = S_RESET_ALL_INITIAL;
         endcase
     end // state_table
 
@@ -147,12 +147,12 @@ module control(
     always @(*)
     begin: enable_signals
         // By default make all our signals 0
-        ld_draw = 5'd0;
-        ld_movePaddle = 1'b0;
-        ld_moveBall = 1'b0;
-        ld_collide = 1'b0;
-        ld_resetInitial = 1'b0;
-        ld_resetLoop = 1'b0;
+      //  ld_draw = 5'd0;
+      //  ld_movePaddle = 1'b0;
+      //  ld_moveBall = 1'b0;
+    //    ld_collide = 1'b0;
+  //      ld_resetInitial = 1'b0;
+//        ld_resetLoop = 1'b0;
 
         case (current_state)
 		  S_RESET_ALL_INITIAL:
@@ -487,14 +487,40 @@ module control(
         // default:    // don't need default since we already made sure all of our outputs were assigned a value at the start of the always block
         endcase
     end // enable_signals
-   
+	 wire pulse;
+	 ratedivider r1(clk, pulse);
    
     // current_state registers
-    always@(posedge clk)
+    always@(posedge pulse, negedge resetn)
     begin: state_FFs
         if(!resetn)
-            current_state <= S_POPULATE_BRICK1;
+            current_state <= S_RESET_ALL_INITIAL;
         else
-            current_state <= next_state;
+		  begin
+		   current_state <= next_state;
+					 currrent <= current_state;
+
+		  end
+           
     end // state_FFS
 endmodule
+
+module ratedivider(clk, pulse);
+	input clk;
+	output pulse;
+	
+	reg[27:0] counter = 28'b0000000000000000000000000000;
+	
+	always @(posedge clk)
+	begin
+		if (counter == 0)
+			counter <= 28'b001000011001011011100110110; // 833 334
+		else
+			counter <= counter - 1;
+
+	end
+	
+	assign pulse = (counter == 0) ? 1 : 0;
+
+endmodule
+
