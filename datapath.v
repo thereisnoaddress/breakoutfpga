@@ -6,7 +6,7 @@ module datapath(
 	 input right,
 	 input [4:0]ld_draw, input[0:0]ld_movePaddle, input[0:0]ld_moveBall, input[0:0]ld_collide, input[0:0]ld_resetInitial, input[0:0]ld_resetLoop,
 	 output reg[7:0] out_x,
-	 output reg[6:0] out_y,
+	 output reg[7:0] out_y,
 	 output reg[2:0] out_colour,
 	 output reg enable,
 	 output reg populating_brick1,
@@ -42,21 +42,21 @@ module datapath(
     
 	
 	 reg[7:0] counterX = 8'd0;
-	 reg[6:0] counterY = 7'd0;
+	 reg[7:0] counterY = 8'd0;
 	 reg[0:0] next = 1'd0;
 	
 	 wire[7:0] changedPaddleX; //7
 	 reg[7:0] oldPaddleX = 8'd0;  // 6
-	 reg[7:0] paddleX = 8'd240;  /// 7
-	 reg[6:0] paddleY = 7'd440;
+	 reg[7:0] paddleX = 8'd80;  /// 7
+	 reg[7:0] paddleY = 8'd100;
 	 
 	
 	 wire[7:0] changedBallX;
 	 wire[7:0] changedBallY;
 	 reg[7:0] oldBallX = 8'd0;
-	 reg[6:0] oldBallY = 7'd0;
+	 reg[7:0] oldBallY = 8'd0;
 	 reg[7:0] ballX = 8'd0;
-	 reg[6:0] ballY = 7'd0;
+	 reg[7:0] ballY = 8'd0;
 	 
 	 reg[11:0] brick_status;
 	 wire[3:0]curBrick;
@@ -70,7 +70,7 @@ module datapath(
     always @ (posedge clk) begin
         if (!resetn) begin
          //   out_x <= 8'd0; 
-			//	out_y <= 7'd0;
+			//	out_y <= 8'd0;
 		//		out_colour <= 3'd1;
 		//		enable <= 1'b0;
         end
@@ -157,15 +157,15 @@ module datapath(
 				begin
 					out_colour<= 3'b100;	
 					enable <= 1'b1;
-					out_x <= 8'd20 + counterX;
-					out_y <= 7'd20 + counterY;
+					out_x <= 8'd5 + counterX;
+					out_y <= 8'd5 + counterY;
 					
-					if (counterX != 8'd120)
+					if (counterX != 8'd30)
 					begin
 						counterX <= counterX + 8'd1;
 						enable <= 1'b1;
 					end
-					else if (counterY != 8'd40)
+					else if (counterY != 8'd10)
 					begin
 						counterX <= 8'd0;
 						counterY <= counterY + 1;
@@ -192,15 +192,15 @@ module datapath(
 				begin
 					out_colour<= 3'b101;	
 					enable <= 1'b1;
-					out_x <= 8'd160 + counterX;
-					out_y <= 7'd20 + counterY;
+					out_x <= 8'd10 + counterX;
+					out_y <= 8'd5 + counterY;
 					
-					if (counterX != 8'd120)
+					if (counterX != 8'd30)
 					begin
 						counterX <= counterX + 8'd1;
 						enable <= 1'b1;
 					end
-					else if (counterY != 8'd40)
+					else if (counterY != 8'd10)
 					begin
 						counterX <= 8'd0;
 						counterY <= counterY + 1;
@@ -226,15 +226,15 @@ module datapath(
 				begin
 					out_colour<= 3'b100;	
 					enable <= 1'b1;
-					out_x <= 8'd300 + counterX;
-					out_y <= 7'd20 + counterY;
+					out_x <= 8'd75 + counterX;
+					out_y <= 8'd5 + counterY;
 					
-					if (counterX != 8'd120)
+					if (counterX != 8'd30)
 					begin
 						counterX <= counterX + 8'd1;
 						enable <= 1'b1;
 					end
-					else if (counterY != 8'd40)
+					else if (counterY != 8'd10)
 					begin
 						counterX <= 8'd0;
 						counterY <= counterY + 1;
@@ -260,15 +260,15 @@ module datapath(
 				begin
 					out_colour<= 3'b010;	
 					enable <= 1'b1;
-					out_x <= 8'd440 + counterX;
-					out_y <= 7'd20 + counterY;
+					out_x <= 8'd110 + counterX;
+					out_y <= 8'd5 + counterY;
 					
-					if (counterX != 8'd120)
+					if (counterX != 8'd30)
 					begin
 						counterX <= counterX + 8'd1;
 						enable <= 1'b1;
 					end
-					else if (counterY != 8'd40)
+					else if (counterY != 8'd10)
 					begin
 						counterX <= 8'd0;
 						counterY <= counterY + 1;
@@ -294,15 +294,15 @@ module datapath(
 				begin 
 					out_colour<= 3'b010;	
 					enable <= 1'b1;
-					out_x <= 8'd20 + counterX;
-					out_y <= 7'd80 + counterY;
+					out_x <= 8'd5 + counterX;
+					out_y <= 8'd20 + counterY;
 					
-					if (counterX != 8'd120)
+					if (counterX != 8'd30)
 					begin
 						counterX <= counterX + 8'd1;
 						enable <= 1'b1;
 					end
-					else if (counterY != 8'd40)
+					else if (counterY != 8'd10)
 					begin
 						counterX <= 8'd0;
 						counterY <= counterY + 1;
@@ -329,15 +329,15 @@ module datapath(
 				begin
 					out_colour<= 3'b100;	
 					enable <= 1'b1;
-					out_x <= 8'd160 + counterX;
-					out_y <= 7'd80 + counterY;
+					out_x <= 8'd10 + counterX;
+					out_y <= 8'd20 + counterY;
 					
-					if (counterX != 8'd120)
+					if (counterX != 8'd30)
 					begin
 						counterX <= counterX + 8'd1;
 						enable <= 1'b1;
 					end
-					else if (counterY != 8'd40)
+					else if (counterY != 8'd10)
 					begin
 						counterX <= 8'd0;
 						counterY <= counterY + 1;
@@ -363,15 +363,15 @@ module datapath(
 				begin
 					out_colour<= 3'b001;	
 					enable <= 1'b1;
-					out_x <= 8'd300 + counterX;
-					out_y <= 7'd80 + counterY;
+					out_x <= 8'd75 + counterX;
+					out_y <= 8'd20 + counterY;
 					
-					if (counterX != 8'd120)
+					if (counterX != 8'd30)
 					begin
 						counterX <= counterX + 8'd1;
 						enable <= 1'b1;
 					end
-					else if (counterY != 8'd40)
+					else if (counterY != 8'd10)
 					begin
 						counterX <= 8'd0;
 						counterY <= counterY + 1;
@@ -397,15 +397,15 @@ module datapath(
 				begin
 					out_colour<= 3'b100;	
 					enable <= 1'b1;
-					out_x <= 8'd440 + counterX;
-					out_y <= 7'd80 + counterY;
+					out_x <= 8'd110 + counterX;
+					out_y <= 8'd20 + counterY;
 					
-					if (counterX != 8'd120)
+					if (counterX != 8'd30)
 					begin
 						counterX <= counterX + 8'd1;
 						enable <= 1'b1;
 					end
-					else if (counterY != 8'd40)
+					else if (counterY != 8'd10)
 					begin
 						counterX <= 8'd0;
 						counterY <= counterY + 1;
@@ -431,15 +431,15 @@ module datapath(
 				begin
 					out_colour<= 3'b101;	
 					enable <= 1'b1;
-					out_x <= 8'd20 + counterX;
-					out_y <= 7'd140 + counterY;
+					out_x <= 8'd5 + counterX;
+					out_y <= 8'd35 + counterY;
 					
-					if (counterX != 8'd120)
+					if (counterX != 8'd30)
 					begin
 						counterX <= counterX + 8'd1;
 						enable <= 1'b1;
 					end
-					else if (counterY != 8'd40)
+					else if (counterY != 8'd10)
 					begin
 						counterX <= 8'd0;
 						counterY <= counterY + 1;
@@ -466,15 +466,15 @@ module datapath(
 				begin
 					out_colour<= 3'b101;	
 					enable <= 1'b1;
-					out_x <= 8'd160 + counterX;
-					out_y <= 7'd140 + counterY;
+					out_x <= 8'd10 + counterX;
+					out_y <= 8'd35 + counterY;
 					
-					if (counterX != 8'd120)
+					if (counterX != 8'd30)
 					begin
 						counterX <= counterX + 8'd1;
 						enable <= 1'b1;
 					end
-					else if (counterY != 8'd40)
+					else if (counterY != 8'd10)
 					begin
 						counterX <= 8'd0;
 						counterY <= counterY + 1;
@@ -500,15 +500,15 @@ module datapath(
 				begin
 					out_colour<= 3'b011;	
 					enable <= 1'b1;
-					out_x <= 8'd300 + counterX;
-					out_y <= 7'd140 + counterY;
+					out_x <= 8'd75 + counterX;
+					out_y <= 8'd35 + counterY;
 					
-					if (counterX != 8'd120)
+					if (counterX != 8'd30)
 					begin
 						counterX <= counterX + 8'd1;
 						enable <= 1'b1;
 					end
-					else if (counterY != 8'd40)
+					else if (counterY != 8'd10)
 					begin
 						counterX <= 8'd0;
 						counterY <= counterY + 1;
@@ -536,15 +536,15 @@ module datapath(
 				begin
 					out_colour<= 3'b101;	
 					enable <= 1'b1;
-					out_x <= 8'd440 + counterX;
-					out_y <= 7'd140 + counterY;
+					out_x <= 8'd110 + counterX;
+					out_y <= 8'd35 + counterY;
 					
-					if (counterX != 8'd120)
+					if (counterX != 8'd30)
 					begin
 						counterX <= counterX + 8'd1;
 						enable <= 1'b1;
 					end
-					else if (counterY != 8'd40)
+					else if (counterY != 8'd10)
 					begin
 						counterX <= 8'd0;
 						counterY <= counterY + 1;
@@ -574,12 +574,12 @@ module datapath(
 					out_x <= oldPaddleX + counterX;
 					out_y <= paddleY + counterY;
 					
-					if (counterX != 8'd120)
+					if (counterX != 8'd20)
 					begin
 						counterX <= counterX + 8'd1;
 						enable <= 1'b1;
 					end
-					else if (counterY != 8'd40)
+					else if (counterY != 8'd4)
 					begin
 						counterX <= 8'd0;
 						counterY <= counterY + 1;
@@ -609,12 +609,12 @@ module datapath(
 					out_x <= paddleX + counterX;
 					out_y <= paddleY + counterY;
 					
-					if (counterX != 8'd120)
+					if (counterX != 8'd20)
 					begin
 						counterX <= counterX + 8'd1;
 						enable <= 1'b1;
 					end
-					else if (counterY != 8'd40)
+					else if (counterY != 8'd4)
 					begin
 						counterX <= 8'd0;
 						counterY <= counterY + 1;
@@ -645,12 +645,12 @@ module datapath(
 					out_x <= oldBallX + counterX;
 					out_y <= oldBallY + counterY;
 					
-					if (counterX != 8'd30)
+					if (counterX != 8'd8)
 					begin
 						counterX <= counterX + 8'd1;
 						enable <= 1'b1;
 					end
-					else if (counterY != 8'd30)
+					else if (counterY != 8'd8)
 					begin
 						counterX <= 8'd0;
 						counterY <= counterY + 1;
@@ -678,15 +678,15 @@ module datapath(
 					out_x <= ballX + counterX;
 					out_y <= ballY + counterY;
 					
-					if (counterX != 8'd30)
+					if (counterX != 8'd8)
 					begin
 						counterX <= counterX + 8'd1;
 						enable <= 1'b1;
 					end
-					else if (counterY != 7'd30)
+					else if (counterY != 8'd8)
 					begin
 						counterX <= 8'd0;
-						counterY <= counterY + 7'd1;
+						counterY <= counterY + 8'd1;
 						enable <= 1'b1;
 					end
 					else if (next == 1'd0)
@@ -699,7 +699,7 @@ module datapath(
 						enable <= 1'b0;
 						drawing_ball <= 1'b0; 
 						counterX <= 8'd0;
-						counterY <= 7'd0;
+						counterY <= 8'd0;
 						next <= 1'b0;
 					end
 				end
@@ -711,15 +711,15 @@ module datapath(
 					brick_status[0] <= 1'b0;
 					out_colour<= 3'b000;	
 					enable <= 1'b1;
-					out_x <= 8'd20 + counterX;
-					out_y <= 7'd20 + counterY;
+					out_x <= 8'd5 + counterX;
+					out_y <= 8'd5 + counterY;
 					
-					if (counterX != 8'd120)
+					if (counterX != 8'd30)
 					begin
 						counterX <= counterX + 8'd1;
 						enable <= 1'b1;
 					end
-					else if (counterY != 8'd40)
+					else if (counterY != 8'd10)
 					begin
 						counterX <= 8'd0;
 						counterY <= counterY + 1;
@@ -747,15 +747,15 @@ module datapath(
 					brick_status[1] <= 1'b0;
 					out_colour<= 3'b000;	
 					enable <= 1'b1;
-					out_x <= 8'd160 + counterX;
-					out_y <= 7'd20 + counterY;
+					out_x <= 8'd10 + counterX;
+					out_y <= 8'd5 + counterY;
 					
-					if (counterX != 8'd120)
+					if (counterX != 8'd30)
 					begin
 						counterX <= counterX + 8'd1;
 						enable <= 1'b1;
 					end
-					else if (counterY != 8'd40)
+					else if (counterY != 8'd10)
 					begin
 						counterX <= 8'd0;
 						counterY <= counterY + 1;
@@ -782,15 +782,15 @@ module datapath(
 					brick_status[2] <= 1'b0;
 					out_colour<= 3'b000;	
 					enable <= 1'b1;
-					out_x <= 8'd300 + counterX;
-					out_y <= 7'd20 + counterY;
+					out_x <= 8'd75 + counterX;
+					out_y <= 8'd5 + counterY;
 					
-					if (counterX != 8'd120)
+					if (counterX != 8'd30)
 					begin
 						counterX <= counterX + 8'd1;
 						enable <= 1'b1;
 					end
-					else if (counterY != 8'd40)
+					else if (counterY != 8'd10)
 					begin
 						counterX <= 8'd0;
 						counterY <= counterY + 1;
@@ -812,20 +812,20 @@ module datapath(
 				end
 				
 				// erasing bricK 4 : x = 440 ; y = 20 ; width = 120 ; height = 40 
-            if(ld_draw == 5'd20 && removing_brick4 == 1'd1)
+            if(ld_draw == 5'd5 && removing_brick4 == 1'd1)
 				begin
 					brick_status[3] <= 1'b0;
 					out_colour<= 3'b000;	
 					enable <= 1'b1;
-					out_x <= 8'd440 + counterX;
-					out_y <= 7'd20 + counterY;
+					out_x <= 8'd110 + counterX;
+					out_y <= 8'd5 + counterY;
 					
-					if (counterX != 8'd120)
+					if (counterX != 8'd30)
 					begin
 						counterX <= counterX + 8'd1;
 						enable <= 1'b1;
 					end
-					else if (counterY != 8'd40)
+					else if (counterY != 8'd10)
 					begin
 						counterX <= 8'd0;
 						counterY <= counterY + 1;
@@ -852,15 +852,15 @@ module datapath(
 					brick_status[4] <= 1'b0;
 					out_colour<= 3'b000;	
 					enable <= 1'b1;
-					out_x <= 8'd20 + counterX;
-					out_y <= 7'd80 + counterY;
+					out_x <= 8'd5 + counterX;
+					out_y <= 8'd20 + counterY;
 					
-					if (counterX != 8'd120)
+					if (counterX != 8'd30)
 					begin
 						counterX <= counterX + 8'd1;
 						enable <= 1'b1;
 					end
-					else if (counterY != 8'd40)
+					else if (counterY != 8'd10)
 					begin
 						counterX <= 8'd0;
 						counterY <= counterY + 1;
@@ -888,15 +888,15 @@ module datapath(
 					brick_status[5] <= 1'b0;
 					out_colour<= 3'b000;	
 					enable <= 1'b1;
-					out_x <= 8'd160 + counterX;
-					out_y <= 7'd80 + counterY;
+					out_x <= 8'd10 + counterX;
+					out_y <= 8'd20 + counterY;
 					
-					if (counterX != 8'd120)
+					if (counterX != 8'd30)
 					begin
 						counterX <= counterX + 8'd1;
 						enable <= 1'b1;
 					end
-					else if (counterY != 8'd40)
+					else if (counterY != 8'd10)
 					begin
 						counterX <= 8'd0;
 						counterY <= counterY + 1;
@@ -923,15 +923,15 @@ module datapath(
 					brick_status[6] <= 1'b0;
 					out_colour<= 3'b000;	
 					enable <= 1'b1;
-					out_x <= 8'd300 + counterX;
-					out_y <= 7'd80 + counterY;
+					out_x <= 8'd75 + counterX;
+					out_y <= 8'd20 + counterY;
 					
-					if (counterX != 8'd120)
+					if (counterX != 8'd30)
 					begin
 						counterX <= counterX + 8'd1;
 						enable <= 1'b1;
 					end
-					else if (counterY != 8'd40)
+					else if (counterY != 8'd10)
 					begin
 						counterX <= 8'd0;
 						counterY <= counterY + 1;
@@ -958,15 +958,15 @@ module datapath(
 					brick_status[7] <= 1'b0;
 					out_colour<= 3'b000;	
 					enable <= 1'b1;
-					out_x <= 8'd440 + counterX;
-					out_y <= 7'd80 + counterY;
+					out_x <= 8'd110 + counterX;
+					out_y <= 8'd20 + counterY;
 					
-					if (counterX != 8'd120)
+					if (counterX != 8'd30)
 					begin
 						counterX <= counterX + 8'd1;
 						enable <= 1'b1;
 					end
-					else if (counterY != 8'd40)
+					else if (counterY != 8'd10)
 					begin
 						counterX <= 8'd0;
 						counterY <= counterY + 1;
@@ -993,15 +993,15 @@ module datapath(
 					brick_status[8] <= 1'b0;
 					out_colour<= 3'b000;	
 					enable <= 1'b1;
-					out_x <= 8'd20 + counterX;
-					out_y <= 7'd140 + counterY;
+					out_x <= 8'd5 + counterX;
+					out_y <= 8'd35 + counterY;
 					
-					if (counterX != 8'd120)
+					if (counterX != 8'd30)
 					begin
 						counterX <= counterX + 8'd1;
 						enable <= 1'b1;
 					end
-					else if (counterY != 8'd40)
+					else if (counterY != 8'd10)
 					begin
 						counterX <= 8'd0;
 						counterY <= counterY + 1;
@@ -1029,15 +1029,15 @@ module datapath(
 					brick_status[9] <= 1'b0;
 					out_colour<= 3'b000;	
 					enable <= 1'b1;
-					out_x <= 8'd160 + counterX;
-					out_y <= 7'd140 + counterY;
+					out_x <= 8'd10 + counterX;
+					out_y <= 8'd35 + counterY;
 					
-					if (counterX != 8'd120)
+					if (counterX != 8'd30)
 					begin
 						counterX <= counterX + 8'd1;
 						enable <= 1'b1;
 					end
-					else if (counterY != 8'd40)
+					else if (counterY != 8'd10)
 					begin
 						counterX <= 8'd0;
 						counterY <= counterY + 1;
@@ -1064,15 +1064,15 @@ module datapath(
 					brick_status[10] <= 1'b0;
 					out_colour<= 3'b000;	
 					enable <= 1'b1;
-					out_x <= 8'd300 + counterX;
-					out_y <= 7'd140 + counterY;
+					out_x <= 8'd75 + counterX;
+					out_y <= 8'd35 + counterY;
 					
-					if (counterX != 8'd120)
+					if (counterX != 8'd30)
 					begin
 						counterX <= counterX + 8'd1;
 						enable <= 1'b1;
 					end
-					else if (counterY != 8'd40)
+					else if (counterY != 8'd10)
 					begin
 						counterX <= 8'd0;
 						counterY <= counterY + 1;
@@ -1101,15 +1101,15 @@ module datapath(
 					brick_status[11] <= 1'b0;
 					out_colour<= 3'b000;	
 					enable <= 1'b1;
-					out_x <= 8'd440 + counterX;
-					out_y <= 7'd140 + counterY;
+					out_x <= 8'd110 + counterX;
+					out_y <= 8'd35 + counterY;
 					
-					if (counterX != 8'd120)
+					if (counterX != 8'd30)
 					begin
 						counterX <= counterX + 8'd1;
 						enable <= 1'b1;
 					end
-					else if (counterY != 8'd40)
+					else if (counterY != 8'd10)
 					begin
 						counterX <= 8'd0;
 						counterY <= counterY + 1;

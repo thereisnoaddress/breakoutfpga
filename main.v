@@ -39,7 +39,7 @@ module main
 	// Create the colour, x, y and writeEn wires that are inputs to the controller.
 	wire [2:0] colour;
 	wire [7:0] x;
-	wire [6:0] y;
+	wire [7:0] y;
 	wire writeEn;
 
 	// Create an Instance of a VGA controller - there can be only one!
@@ -113,8 +113,8 @@ module main
 	// datapath d0(...);
 		datapath do(.clk(CLOCK_50),
 	  .resetn(resetn),
-	  .left(KEY[1]),
-	  .right(KEY[0]),
+	  .left(~KEY[1]),
+	  .right(~KEY[0]),
 	  .ld_draw(ld_draw), .ld_movePaddle(ld_movePaddle), .ld_moveBall(ld_moveBall), .ld_collide(ld_collide), .ld_resetInitial(ld_resetInitial), .ld_resetLoop(ld_resetLoop),
 	 .out_x(x),
 	 .out_y(y),

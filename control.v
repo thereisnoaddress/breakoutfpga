@@ -48,8 +48,7 @@ module control(
 					 S_POPULATE_BRICK9 = 8'd9,
 					 S_POPULATE_BRICK10 = 8'd10,
 					 S_POPULATE_BRICK11 = 8'd11,
-					 S_POPULATE_BRICK12 = 8'd12,
-					 
+					 S_POPULATE_BRICK12 = 8'd12, 
 					 S_RESET_ALL_LOOP = 8'd13,				
 					 S_MOVE_PADDLE = 8'd14,
 					 S_ERASE_OLD_PADDLE = 8'd15,
@@ -72,7 +71,7 @@ module control(
 					 S_REMOVE_BRICK12 = 8'd32;
 					 
   // Next state logic aka our state table
-    always@(*)
+    always@(posedge clk)
     begin: state_table 
             case (current_state)
 					S_RESET_ALL_INITIAL: next_state = S_POPULATE_BRICK1;
@@ -92,7 +91,7 @@ module control(
 					
 					S_MOVE_PADDLE: next_state = S_ERASE_OLD_PADDLE;
 					S_ERASE_OLD_PADDLE: next_state = erasing_paddle ? S_ERASE_OLD_PADDLE:S_DRAW_PADDLE;
-					S_DRAW_PADDLE: next_state = drawing_paddle ? S_DRAW_PADDLE : S_MOVE_BALL;
+					S_DRAW_PADDLE: next_state = drawing_paddle ? S_DRAW_PADDLE : S_RESET_ALL_LOOP;
 					S_MOVE_BALL: next_state = S_ERASE_OLD_BALL;
 					S_ERASE_OLD_BALL : next_state = erasing_ball ? S_ERASE_OLD_BALL: S_DRAW_BALL;
 					S_DRAW_BALL: next_state = drawing_ball ? S_DRAW_BALL : S_COLLISION;
@@ -144,7 +143,7 @@ module control(
     end // state_table
 
    // Output logic aka all of our datapath control signals
-    always @(*)
+    always @(posedge clk)
     begin: enable_signals
         // By default make all our signals 0
       //  ld_draw = 5'd0;
