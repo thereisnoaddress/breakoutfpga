@@ -70,7 +70,6 @@ module ball(X, Y, clk, newX, newY, brick_status, paddle_location, brick_num);
 		      );
 
    // edge collision
-
    change_direction_collision cdc0(
 				  .collision_code(collision),
 				  .original_dir(dir),
@@ -90,6 +89,7 @@ module ball(X, Y, clk, newX, newY, brick_status, paddle_location, brick_num);
 				  .original_dir(dir),
 				  .new_dir(brick_newdir)
 				  );
+
 
    always @(posedge clk) begin
 
@@ -118,7 +118,9 @@ module ball(X, Y, clk, newX, newY, brick_status, paddle_location, brick_num);
       // Check paddle collision
       if (dir == 2'b10 || dir == 2'b11) begin
 
-	 if ((paddle_location - 6'b101000 <= xint + xstep) && (xint + xstep <= paddle_location + 6'b101000) && (yint+ ystep <= 5'b10100 ) ) begin
+	 if ((paddle_location - 6'b101000 <= xint + xstep) 
+	 	&& (xint + xstep <= paddle_location + 6'b101000) 
+		&& (yint+ ystep <= 5'b10100 ) ) begin
 
 	    paddle_collision <= 1'b1;
 	    
@@ -142,15 +144,15 @@ module ball(X, Y, clk, newX, newY, brick_status, paddle_location, brick_num);
 
 	 
 
-         // check brick collision	  
+    // check brick collision	  
 	else if ((brick_num != 4'b1111) && (brick_status[brick_num] == 1'b1) && (brick_collision != 2'b00))
 
 	  newdir <= brick_newdir;
       
 	    
-	  else
+	else
 	    
-	    newdir <= dir;
+	  newdir <= dir;
       
    end // always 
 
