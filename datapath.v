@@ -46,17 +46,14 @@ module datapath(
 	 reg[0:0] next = 1'd0;
 	
 	 wire[7:0] changedPaddleX; //7
-	 reg[7:0] oldPaddleX = 8'd0;  // 6
 	 reg[7:0] paddleX = 8'd80;  /// 7
 	 reg[7:0] paddleY = 8'd100;
 	 
 	
 	 wire[7:0] changedBallX;
 	 wire[7:0] changedBallY;
-	 reg[7:0] oldBallX = 8'd0;
-	 reg[7:0] oldBallY = 8'd0;
-	 reg[7:0] ballX = 8'd0;
-	 reg[7:0] ballY = 8'd0;
+	 reg[7:0] ballX = 8'd60;
+	 reg[7:0] ballY = 8'd60;
 	 
 	 reg[11:0] brick_status;
 	 wire[3:0]curBrick;
@@ -192,7 +189,7 @@ module datapath(
 				begin
 					out_colour<= 3'b101;	
 					enable <= 1'b1;
-					out_x <= 8'd10 + counterX;
+					out_x <= 8'd40 + counterX;
 					out_y <= 8'd5 + counterY;
 					
 					if (counterX != 8'd30)
@@ -255,10 +252,10 @@ module datapath(
 					end
 				end
 				
-				// populating bricK 4 : x = 440 ; y = 20 ; width = 120 ; height = 40 
+				// populating brick 4 : x = 20 ; y = 80 ; width = 120 ; height = 40 
             if(ld_draw == 5'd4 && populating_brick4 == 1'd1)
-				begin
-					out_colour<= 3'b010;	
+				begin 
+					out_colour<= 3'b10;	
 					enable <= 1'b1;
 					out_x <= 8'd110 + counterX;
 					out_y <= 8'd5 + counterY;
@@ -292,7 +289,7 @@ module datapath(
 				// populating brick 5 : x = 20 ; y = 80 ; width = 120 ; height = 40 
             if(ld_draw == 5'd5 && populating_brick5 == 1'd1)
 				begin 
-					out_colour<= 3'b010;	
+					out_colour<= 3'b010; // vga doesnt understand what 010 is. (no that wasn't the case it was the erasing brick), but changing the colour changes the states for some reason.	
 					enable <= 1'b1;
 					out_x <= 8'd5 + counterX;
 					out_y <= 8'd20 + counterY;
@@ -327,9 +324,9 @@ module datapath(
 					// populating bricK 6 : x = 160 ; y =80 ; width = 120 ; height = 40 
             if(ld_draw == 5'd6 && populating_brick6 == 1'd1)
 				begin
-					out_colour<= 3'b100;	
+					out_colour<= 3'b010;	
 					enable <= 1'b1;
-					out_x <= 8'd10 + counterX;
+					out_x <= 8'd40 + counterX;
 					out_y <= 8'd20 + counterY;
 					
 					if (counterX != 8'd30)
@@ -466,7 +463,7 @@ module datapath(
 				begin
 					out_colour<= 3'b101;	
 					enable <= 1'b1;
-					out_x <= 8'd10 + counterX;
+					out_x <= 8'd40 + counterX;
 					out_y <= 8'd35 + counterY;
 					
 					if (counterX != 8'd30)
@@ -571,7 +568,7 @@ module datapath(
 				begin
 					out_colour<= 3'b000;	
 					enable <= 1'b1;
-					out_x <= oldPaddleX + counterX;
+					out_x <= paddleX + counterX;
 					out_y <= paddleY + counterY;
 					
 					if (counterX != 8'd20)
@@ -642,8 +639,8 @@ module datapath(
 				begin
 					out_colour<= 3'b000;	
 					enable <= 1'b1;
-					out_x <= oldBallX + counterX;
-					out_y <= oldBallY + counterY;
+					out_x <= ballX + counterX;
+					out_y <= ballY + counterY;
 					
 					if (counterX != 8'd8)
 					begin
@@ -812,7 +809,7 @@ module datapath(
 				end
 				
 				// erasing bricK 4 : x = 440 ; y = 20 ; width = 120 ; height = 40 
-            if(ld_draw == 5'd5 && removing_brick4 == 1'd1)
+            if(ld_draw == 5'd20 && removing_brick4 == 1'd1)
 				begin
 					brick_status[3] <= 1'b0;
 					out_colour<= 3'b000;	
@@ -1134,15 +1131,11 @@ module datapath(
 				
 				if (ld_movePaddle == 1'b1)
 				begin
-					oldPaddleX <= paddleX;
 					paddleX <= changedPaddleX;
 				end
 				if (ld_moveBall == 1'b1)
 				begin
-					oldBallX <= ballX;
 					ballX <= changedBallX;
-					
-					oldBallY = ballY;
 					ballY <= changedBallY;
 				end
 				

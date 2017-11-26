@@ -87,18 +87,20 @@ module control(
 					S_POPULATE_BRICK10: next_state = populating_brick10 ?  S_POPULATE_BRICK10: S_POPULATE_BRICK11;
 					S_POPULATE_BRICK11: next_state = populating_brick11 ?  S_POPULATE_BRICK11: S_POPULATE_BRICK12;
 					S_POPULATE_BRICK12: next_state = populating_brick12 ?  S_POPULATE_BRICK12: S_RESET_ALL_LOOP;			
-					S_RESET_ALL_LOOP: next_state = S_MOVE_PADDLE;
+					S_RESET_ALL_LOOP: next_state = S_ERASE_OLD_PADDLE;
+					S_ERASE_OLD_PADDLE: next_state = erasing_paddle ? S_ERASE_OLD_PADDLE : S_MOVE_PADDLE;
+
+					S_MOVE_PADDLE: next_state = S_DRAW_PADDLE;
+					S_DRAW_PADDLE: next_state = drawing_paddle ? S_DRAW_PADDLE : S_ERASE_OLD_BALL;
 					
-					S_MOVE_PADDLE: next_state = S_ERASE_OLD_PADDLE;
-					S_ERASE_OLD_PADDLE: next_state = erasing_paddle ? S_ERASE_OLD_PADDLE:S_DRAW_PADDLE;
-					S_DRAW_PADDLE: next_state = drawing_paddle ? S_DRAW_PADDLE : S_RESET_ALL_LOOP;
-					S_MOVE_BALL: next_state = S_ERASE_OLD_BALL;
-					S_ERASE_OLD_BALL : next_state = erasing_ball ? S_ERASE_OLD_BALL: S_DRAW_BALL;
-					S_DRAW_BALL: next_state = drawing_ball ? S_DRAW_BALL : S_COLLISION;
+					S_ERASE_OLD_BALL : next_state = erasing_ball ? S_ERASE_OLD_BALL: S_MOVE_BALL;
+
+					S_MOVE_BALL: next_state = S_DRAW_BALL;
+					S_DRAW_BALL: next_state = drawing_ball ? S_DRAW_BALL : S_RESET_ALL_LOOP;
 					S_COLLISION:
 					begin	
 					if (whichBrick == 4'd0)
-						next_state = S_MOVE_PADDLE;
+						next_state = S_RESET_ALL_LOOP;
 					if (whichBrick == 4'd1)
 						next_state = S_REMOVE_BRICK1;
 					if (whichBrick == 4'd2)
@@ -513,7 +515,7 @@ module ratedivider(clk, pulse);
 	always @(posedge clk)
 	begin
 		if (counter == 0)
-			counter <= 28'b001000011001011011100110110; // 833 334
+			counter <= 28'b0000001000011001011011100110; // 833 334 changing counter changes the move paddle control and the movement completely. This might be because there are more bits than 28.
 		else
 			counter <= counter - 1;
 
