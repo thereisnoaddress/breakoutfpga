@@ -10,10 +10,10 @@ module paddle(X, clk, resetn, left, right, X0);
 	always @(posedge clk)
 	// Move to the left
 		 if (left == 1'd1) begin
-//			if (X - 6'b101000- 1'b1 <= 1'b0)
-//			  X0 <= 1'b1 + 6'b101000;
-//
-//			else
+			if (X - 6'b101000- 1'b1 <= 1'b0)
+			  X0 <= 1'b1 + 6'b101000;
+
+			else
 					  X0 <= X - 1;
 		end
 
@@ -22,10 +22,10 @@ module paddle(X, clk, resetn, left, right, X0);
 // Move to the right
 		else if (right == 1'd1) begin
 		
-//		if (X + 6'b101000 + 1'b1 >= 9'b111100000)
-//				  X0 <= X;
-//
-//		else
+		if (X + 6'b101000 + 1'b1 >= 9'b111100000)
+				  X0 <= X;
+
+		else
 				X0 <= X + 8'd1;
 		end
 
