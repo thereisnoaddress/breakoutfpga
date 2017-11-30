@@ -1,5 +1,5 @@
-module paddle(X, clk, resetn, left, right, X0);
-	
+module paddle(X, clk, resetn, left, right, X0, en);
+	input en;
 	input clk;
 	input [7:0] X;
 	input resetn;
@@ -8,6 +8,7 @@ module paddle(X, clk, resetn, left, right, X0);
 	output reg [7:0] X0; 
 
 	always @(posedge clk)
+	if (en == 1'b1)
 	// Move to the left
 		 if (left == 1'd1) begin
 			if (X - 6'b101000- 1'b1 <= 1'b0)

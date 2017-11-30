@@ -58,8 +58,8 @@ module datapath(
 	 reg[11:0] brick_status;
 	 wire[3:0]curBrick;
 	 
-	 ball b(.X(ballX), .Y(ballY), .clk(clk), .newX(changedBallX), .newY(changedBallY), .brick_status(brick_status), .paddle_location(paddleX), .brick_num(curBrick));
-    paddle p1(.clk(clk), .left(left), .right(right), .resetn(resetn), .X(paddleX), .X0(changedPaddleX));
+	 ball b(.X(ballX), .Y(ballY), .clk(clk), .newX(changedBallX), .newY(changedBallY), .brick_status(brick_status), .paddle_location(paddleX), .brick_num(curBrick), .en(ld_moveBall));
+    paddle p1(.clk(clk), .left(left), .right(right), .resetn(resetn), .X(paddleX), .X0(changedPaddleX), .en(ld_movePaddle));
 	 
     // Output result register
 	 

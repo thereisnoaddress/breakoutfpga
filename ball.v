@@ -1,10 +1,11 @@
-module ball(X, Y, clk, newX, newY, brick_status, paddle_location, brick_num);
+module ball(X, Y, clk, newX, newY, brick_status, paddle_location, brick_num, en);
 
    input [9:0] X;
    input [9:0] Y;
    input       clk;
    input [11:0] brick_status;
    input [9:0] 	paddle_location;
+   input en;
    
    
 
@@ -164,7 +165,8 @@ module ball(X, Y, clk, newX, newY, brick_status, paddle_location, brick_num);
 		  .clk(clk),
 		  .dir(newdir),
 		  .X0(newX),
-		  .Y0(newY)
+		  .Y0(newY),
+		  .en(en)
 		  );
   
 
@@ -178,12 +180,13 @@ endmodule // move_ball
 
 
 
-module update_ball(X, Y, clk, dir, X0, Y0);
+module update_ball(X, Y, clk, dir, X0, Y0, en);
 
 	input clk;
 	input [9:0] X; 
 	input [9:0] Y;
 	input [1:0] dir;
+	input en;
    
 	// dir 00 up right
 	//     01 up left
@@ -201,35 +204,34 @@ module update_ball(X, Y, clk, dir, X0, Y0);
    assign dir0 = dir;
 
 	always @(posedge clk)begin
+		if (en == 1'b1) 
 	
-	
-	      X0 <= X;
-			Y0 <= Y;
 		case(dir0)
 			2'b00: begin
-			   X0 <= X0 + 1'b1;
-			   Y0 <= Y0 + 1'b1;
+			   X0 <= X + 1'b1;
+			   Y0 <= Y + 1'b1;
 			end
 		  
 			2'b01: begin
-			   X0 <= X0 - 1'b1; 
-			   Y0 <= Y0 + 1'b1;
+			   X0 <= X - 1'b1; 
+			   Y0 <= Y + 1'b1;
 			end
 		  
 			2'b10: begin
-			   X0 <= X0 + 1'b1; 
-			   Y0 <= Y0 - 1'b1;
+			   X0 <= X + 1'b1; 
+			   Y0 <= Y - 1'b1;
 			end
 		  
 			2'b11: begin
-			   X0 <= X0 - 1'b1; 
-			   Y0 <= Y0 - 1'b1;
+			   X0 <= X - 1'b1; 
+			   Y0 <= Y - 1'b1;
 			end
 		  
 		default: begin
 		   X0 <= X0; 
 		   Y0 <= Y0;
 		end
+
 		  
 	endcase // dir
 	end // always @ (posedge clk)
